@@ -115,29 +115,93 @@ body.rec #ctl,body.rec #start{display:none}
 .loop .n{position:absolute;width:118px;margin:-22px 0 0 -59px;text-align:center;font-size:18px;padding:4px 2px}
 .loop .ring{position:absolute;inset:60px;border:6px dashed rgba(255,255,255,.7);border-radius:50%;animation:spin 14s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ck{width:384px;padding:8px 12px}.ck h4{font:900 18px var(--zh);margin:0 0 2px;color:#111}.ck div{font-size:16.5px;line-height:1.32;font-weight:500}
+.ck{width:336px;padding:8px 10px}.ck h4{font:900 17px var(--zh);margin:0 0 2px;color:#111}.ck div{font-size:15.5px;line-height:1.32;font-weight:500}
 .wk{display:flex;height:54px;width:900px;border:4px solid #000;box-shadow:0 0 0 3px #fff}
 .wk div{display:flex;align-items:center;justify-content:center;font-size:18px;color:#111;border-right:3px solid #000;white-space:nowrap;overflow:hidden}
+/* Minecraft 加強：太陽・地獄・快捷欄・地圖・蓋錯重蓋・交易・工作台・終界門 */
+.sky.nether{background:linear-gradient(#240507,#5a1010 60%,#8c2413)}
+#stage[data-bg=nether] .nether{opacity:1}
+#ground .ng{position:absolute;left:0;top:0;opacity:0;transition:opacity 1.2s}
+#stage[data-bg=nether] #ground .ng{opacity:1}
+.drip{position:absolute;top:0;width:6px;height:18px;background:#ff9a2e;box-shadow:0 0 8px #ff5a00;opacity:0;transition:opacity 1s;animation:drip linear infinite}
+#stage[data-bg=nether] .drip{opacity:.9}
+@keyframes drip{from{transform:translateY(-30px)}to{transform:translateY(560px)}}
+#sun{position:absolute;left:70px;top:186px;width:56px;height:56px;background:#ffe36b;box-shadow:0 0 0 8px rgba(255,227,107,.3);transition:left 1.2s,top 1.2s,background 1s,opacity 1s}
+#stage[data-bg=night] #sun{background:#e9eefc;box-shadow:0 0 0 8px rgba(233,238,252,.2)}
+#stage[data-bg=dusk] #sun{background:#ffb347;box-shadow:0 0 0 8px rgba(255,179,71,.3)}
+#stage[data-bg=blue] #sun,#stage[data-bg=cave] #sun,#stage[data-bg=nether] #sun{opacity:0}
+.prop{position:absolute;top:548px;transform:translateY(-100%);opacity:0;transition:opacity .8s}
+.prop.on{opacity:1}
+#fire canvas{transform-origin:50% 100%;animation:flick .4s steps(1) infinite;filter:drop-shadow(0 0 10px #ff8a1e)}
+@keyframes flick{0%{transform:none}50%{transform:scale(-1,1.12)}}
+#stat{position:absolute;left:421px;width:438px;top:590px;display:flex;justify-content:space-between}
+#food{display:flex;gap:2px}
+#hearts canvas,#food canvas{transition:filter .4s}
+.emp{filter:grayscale(1) brightness(.3)}
+#hot{position:absolute;left:421px;top:612px;display:flex;border:3px solid #000;background:#000}
+.hs{width:48px;height:48px;background:rgba(70,70,70,.85);border:4px solid;border-color:#3a3a3a #9a9a9a #9a9a9a #3a3a3a;display:flex;align-items:center;justify-content:center}
+.hs.sel{outline:4px solid #fff;outline-offset:-1px;position:relative;z-index:1}
+.hs canvas{opacity:0;transform:translateY(-46px) scale(1.7);transition:opacity .3s,transform .55s cubic-bezier(.3,1.6,.5,1)}
+.hs.on canvas{opacity:1;transform:none}
+.fmap{position:relative;flex:none;display:grid;grid-template-columns:repeat(14,11px);grid-auto-rows:11px;background:#dcc890;border:6px solid #8a6a3a;box-shadow:0 0 0 4px #000;padding:6px}
+.mc{transition:background .3s}.mc.on{background:var(--c)}
+.mkw{position:absolute;width:26px;height:26px}.mk{position:absolute;inset:0;border:4px solid var(--yel);box-shadow:0 0 0 2px #000}
+.wall{display:grid;grid-template-columns:repeat(5,32px);grid-auto-rows:32px;flex:none}
+.wc{position:relative;background:var(--brick) 0/32px;image-rendering:pixelated}
+.wc.no,.wc.a,.wc.b{background:none}
+.wc i{position:absolute;inset:0;opacity:0;background-size:32px;image-rendering:pixelated}
+.wc .w{background-image:var(--leaf);outline:4px solid var(--red);outline-offset:-4px}
+.wc .r{background-image:var(--brick)}
+.on .wc.a .w{animation:wA 7s infinite}.on .wc.a .r{animation:rA 7s infinite}
+.on .wc.b .w{animation:wB 7s infinite}.on .wc.b .r{animation:rB 7s infinite}
+@keyframes wA{0%,24%{opacity:1;translate:0 0}26%{translate:-4px 0}28%{translate:4px 0}30%{translate:-4px 0;opacity:1}32%,100%{opacity:0}}
+@keyframes rA{0%,33%{opacity:0;translate:0 -26px}38%,100%{opacity:1;translate:0 0}}
+@keyframes wB{0%,48%{opacity:0;translate:0 -26px}53%,72%{opacity:1;translate:0 0}74%{translate:-4px 0}76%{translate:4px 0}78%{translate:-4px 0;opacity:1}80%,100%{opacity:0}}
+@keyframes rB{0%,81%{opacity:0;translate:0 -26px}86%,100%{opacity:1;translate:0 0}}
+.lava{background:var(--lava) 0 0/64px;image-rendering:pixelated;border:4px solid #000;box-shadow:0 0 0 4px #4a0f0f,0 0 30px #ff5a00;padding:12px 16px 18px;animation:lavaflow 7s linear infinite}
+@keyframes lavaflow{to{background-position:64px 64px}}
+.lava h4{margin:0 0 12px;font:13px var(--px);color:#fff;letter-spacing:1px;text-shadow:2px 2px 0 #000}
+.btn.stone{background:var(--stone) 0/48px;image-rendering:pixelated;border-color:#6a6474 #121016 #121016 #6a6474}
+.btn.stone.on{animation:bobs 1.8s ease-in-out infinite alternate}.btn.stone:nth-child(even).on{animation-delay:-.9s}
+@keyframes bobs{to{translate:0 -5px}}
+.ck h4{display:flex;align-items:center;gap:8px}
+.sc.act .cki{display:block;animation:popin .5s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(.5s + var(--i)*.18s)}
+.sc.act .ckout{animation:popin .6s cubic-bezier(.3,1.5,.5,1) 2.5s both}
+@keyframes popin{from{opacity:0;transform:translateY(160px) scale(.3)}to{opacity:1;transform:none}}
+.endp{display:grid;grid-template-columns:repeat(5,30px);grid-auto-rows:30px;flex:none}
+.ef{background:#d9dca3;border:3px solid #7d8a5a;box-shadow:inset 0 0 0 3px #2f7a66;display:flex;align-items:center;justify-content:center}
+.eye{width:10px;height:10px;background:#9be8c8;box-shadow:0 0 0 3px #1f5c4a}
+.eye.last{opacity:0}.on .eye.last{animation:eyein .5s cubic-bezier(.3,1.6,.5,1) .9s both}
+@keyframes eyein{from{opacity:0;transform:translateY(-70px) scale(2.2)}to{opacity:1;transform:none}}
+.ec{position:relative;background:#2b2b33}.on .ec{animation:plit 1s 1.6s both}
+@keyframes plit{from{background:#2b2b33}to{background:#04121c;box-shadow:0 0 18px #3fe0c0}}
+.ec::after{content:"";position:absolute;left:8px;top:18px;width:3px;height:3px;background:#bff;opacity:0}
+.ec:nth-child(odd)::after{left:19px;top:7px}
+.on .ec::after{animation:star 1.6s 2.6s infinite both}.on .ec:nth-child(odd)::after{animation-delay:3.3s}
+@keyframes star{0%{opacity:0}50%{opacity:1}100%{opacity:.15}}
 </style>
 </head>
 <body>
 <div id="wrap">
  <div id="box"><div id="stage" data-bg="day">
-  <div class="sky day"></div><div class="sky night"></div><div class="sky cave"></div><div class="sky blue"></div><div class="sky dusk"></div>
-  <div id="deco"></div>
+  <div class="sky day"></div><div class="sky night"></div><div class="sky cave"></div><div class="sky blue"></div><div class="sky dusk"></div><div class="sky nether"></div>
+  <div id="deco"><div id="sun"></div></div>
   <div id="ground"></div>
   <div class="actor" id="goal" style="left:1128px"><small>THESIS HOUSE</small><i data-bd="house" data-z="12"></i></div>
   <div class="actor" id="creep" style="left:-80px"><small>期限</small><i data-sp="creeper" data-z="4"></i></div>
+  <div class="prop glow" id="portal" style="left:560px"><i data-bd="portal" data-z="14"></i></div>
+  <div class="prop" id="fire" style="left:1022px"><i data-sp="fire" data-z="5"></i></div>
   <div class="actor" id="hero" style="left:60px"><i data-sp="player" data-z="4"></i></div>
 
   <div id="hd"><div class="no"></div><div><div class="en"></div><div class="zh"></div></div></div>
 
   <!-- 00 TITLE -->
-  <section class="sc nohd" data-bg="day" data-no="00" data-en="TITLE SCREEN" data-zh="" data-tool="先定義自己的勝利條件，再談效率">
+  <section class="sc nohd" data-bg="day" data-no="00" data-en="TITLE SCREEN" data-zh="" data-tool="">
    <div class="ly col gs" data-step="0" data-until="1">
-    <div class="logo">MASTERCRAFT</div><div class="splash">不是攻略本！</div>
+    <div class="logo">MASTERCRAFT</div><div class="splash">歡迎成為新玩家！</div>
     <div class="big" style="margin-top:34px">歡迎來到碩士世界</div>
     <div class="mid yel">地圖很大，資源有限，你想蓋什麼？</div>
+    <div class="xs" style="margin-top:12px;font-weight:500;opacity:.85"><span class="en yel" style="font-size:11px;margin-right:10px">SAVE DATA: PLAYER</span>日博一　林晏瑋</div>
    </div>
    <div class="ly col gl" data-step="1" data-until="2">
     <div class="big">碩士班怎樣才算「玩得好」？</div>
@@ -149,7 +213,7 @@ body.rec #ctl,body.rec #start{display:none}
     <div class="big yel pop" data-step="1.78">都不一定。</div>
    </div>
    <div class="ly col" data-step="2" data-until="3">
-    <div class="mid">碩士班比較像<span class="yel">沙盒遊戲</span></div>
+    <div class="mid">碩士班就像一個<span class="yel">沙盒遊戲</span></div>
     <div class="row gl st">
      <div class="pn" data-step="2.2" style="width:230px;text-align:center"><h4>RULES</h4>有規則<br><span class="sm">學分・口試…</span></div>
      <div class="pn" data-step="2.26" style="width:230px;text-align:center"><h4>TIME LIMIT</h4>有期限<br><span class="sm">修業年限</span></div>
@@ -160,28 +224,28 @@ body.rec #ctl,body.rec #start{display:none}
    <div class="ly gl" data-step="3">
     <div class="col row"><i data-sp="chest" data-z="14"></i><div class="en yel sm">MY SAVE FILE</div></div>
     <div class="col" style="display:flex;gap:14px">
-     <div class="mid" style="text-align:left">今天沒有〈兩年畢業攻略〉<br>只有<span class="yel">我的存檔</span></div>
+     <div class="mid" style="text-align:left">今天帶大家來看看<br><span class="yel">我的存檔</span></div>
      <div class="tip" data-step="3.25">▸ 當時有什麼資源<br>▸ 遇到什麼問題<br>▸ 怎麼做選擇</div>
-     <div class="sm" data-step="3.55">看完，請回頭看<span class="yel">你自己的世界</span>。</div>
+     <div class="sm" data-step="3.55">希望讓<span class="yel">你的存檔</span>可以玩得更開心</div>
     </div>
    </div>
   </section>
 
   <!-- 01 SPAWN -->
-  <section class="sc" data-bg="day" data-no="01" data-en="SPAWN" data-zh="每個人的出生點不一樣" data-tool="不比進度，先確認條件">
+  <section class="sc" data-bg="day" data-no="01" data-en="SPAWN" data-zh="每個人的出生點不一樣" data-tool="了解自己，不要盲目比較；先定義自己的勝利條件，再談效率">
    <div class="ly gl" data-step="0" data-until="1">
     <div class="col row" data-step="0.25"><i data-bd="village" data-z="13"></i><div class="sign">出生點 A：村莊旁邊</div></div>
     <div class="en mid">VS</div>
     <div class="col row" data-step="0.5"><i data-bd="island" data-z="18"></i><div class="sign">出生點 B：孤島＋一棵樹</div></div>
    </div>
    <div class="ly st" data-step="1" data-until="2" style="align-items:center">
-    <div class="pn card" data-step="1.1"><div class="row gs" style="justify-content:flex-start"><i data-sp="player" data-z="4" data-c="#2d9c8f"></i><b>玩家 A<br><span class="sm">已有場域經驗</span></b></div>
+    <div class="pn card" data-step="1.1"><div class="row gs" style="justify-content:flex-start"><i data-sp="player" data-z="4" data-c="#2d9c8f"></i><b>玩家 A<br><span class="sm">已有研究經驗</span></b></div>
      <div class="r"><span>時間</span><div class="bar"><i class="fill fx" data-step="1.15" style="--w:60%"></i></div></div><div class="r"><span>金錢</span><div class="bar"><i class="fill fx" data-step="1.15" style="--w:45%;background:#f2c94c"></i></div></div><div class="r"><span>精力</span><div class="bar"><i class="fill fx" data-step="1.15" style="--w:70%;background:#ff7b7b"></i></div></div><div class="r"><span>支持</span><div class="bar"><i class="fill fx" data-step="1.15" style="--w:55%;background:#6fe9ff"></i></div></div></div>
     <div class="pn card" data-step="1.3"><div class="row gs" style="justify-content:flex-start"><i data-sp="player" data-z="4" data-c="#c0562b"></i><b>玩家 B<br><span class="sm">需要打工</span></b></div>
      <div class="r"><span>時間</span><div class="bar"><i class="fill fx" data-step="1.35" style="--w:28%"></i></div></div><div class="r"><span>金錢</span><div class="bar"><i class="fill fx" data-step="1.35" style="--w:22%;background:#f2c94c"></i></div></div><div class="r"><span>精力</span><div class="bar"><i class="fill fx" data-step="1.35" style="--w:50%;background:#ff7b7b"></i></div></div><div class="r"><span>支持</span><div class="bar"><i class="fill fx" data-step="1.35" style="--w:75%;background:#6fe9ff"></i></div></div></div>
     <div class="pn card" data-step="1.45"><div class="row gs" style="justify-content:flex-start"><i data-sp="player" data-z="4" data-c="#7a4cc0"></i><b>玩家 C<br><span class="sm">有家庭責任</span></b></div>
      <div class="r"><span>時間</span><div class="bar"><i class="fill fx" data-step="1.5" style="--w:35%"></i></div></div><div class="r"><span>金錢</span><div class="bar"><i class="fill fx" data-step="1.5" style="--w:65%;background:#f2c94c"></i></div></div><div class="r"><span>精力</span><div class="bar"><i class="fill fx" data-step="1.5" style="--w:30%;background:#ff7b7b"></i></div></div><div class="r"><span>支持</span><div class="bar"><i class="fill fx" data-step="1.5" style="--w:40%;background:#6fe9ff"></i></div></div></div>
-    <div class="tip sm" data-step="1.7" style="width:250px;align-self:center">同樣叫「碩一」<br>血條長得都不一樣<br><span class="gray xs">（長度僅為示意，不是評分）</span></div>
+    <div class="tip sm" data-step="1.7" style="width:250px;align-self:center">同樣是「碩一」<br>初始能力分配都不一樣</div>
    </div>
    <div class="ly col" data-step="2">
     <div class="en yel sm">MY SAVE FILE</div>
@@ -191,7 +255,7 @@ body.rec #ctl,body.rec #start{display:none}
      <div class="pn" data-step="2.45" style="text-align:center"><h4>2020.09</h4>進入碩士班<br>&nbsp;</div>
      <div class="tip" data-step="2.75" style="margin-left:20px">進場前，<br>那塊地圖<span class="yel">已經開過</span></div>
     </div>
-    <div class="tip sm" data-step="3" data-until="4" style="text-align:center">⚠ 存檔類型：<span class="yel">教育類・實踐研究</span>（在教學現場做課程，再研究它）<br>別的領域、別的方法，地形會不一樣 → 請當<span class="yel">參考座標</span>，不是衛星導航</div>
+    <div class="tip sm" data-step="3" data-until="4" style="text-align:center">⚠ 存檔類型：<span class="yel">教育類・實踐研究</span>（在教學現場做課程，再研究它）<br>別的領域、別的方法，地形會不一樣 → <span class="yel">個人案例僅作參考</span></div>
     <div class="mid" data-step="4" style="margin-top:-96px">比較早做完 ≠ 比較有效率　<span class="yel pop" data-step="4.4" style="display:inline-block">＝ 可能只是偷跑一年</span></div>
    </div>
   </section>
@@ -205,7 +269,7 @@ body.rec #ctl,body.rec #start{display:none}
     <div class="col" style="display:flex;gap:16px;flex:1">
      <div class="tip" data-step="1"><span class="en xs yel">GAMEPLAY</span>　玩法：<span class="yel">自行決定</span>
       <div class="row gs wrapx sm" data-step="1.45" style="justify-content:flex-start;margin-top:8px"><span class="btn">教學現場</span>▸<span class="btn">訪談</span>▸<span class="btn">研討會</span>▸<span class="btn">期中發表</span>▸<span class="btn">畢業</span></div>
-      <div class="sm gray" data-step="1.8" style="margin-top:6px">（這條路沒有自動導航）</div></div>
+      <div class="sm gray" data-step="1.8" style="margin-top:6px">（得要自己往前推進）</div></div>
      <div class="row" data-step="2" style="justify-content:flex-start;gap:26px">
       <div class="sign sm" data-step="2.3">一定要發幾篇<b class="stamp" data-step="2.72" style="left:10px;top:48px">傳說？</b></div>
       <div class="sign sm" data-step="2.38">一定要幾年畢業<b class="stamp" data-step="2.76" style="left:20px;top:48px">傳說？</b></div>
@@ -216,7 +280,7 @@ body.rec #ctl,body.rec #start{display:none}
   </section>
 
   <!-- 03 EXPLORE -->
-  <section class="sc" data-bg="day" data-no="03" data-en="EXPLORE" data-zh="地圖很大：我到底想在哪裡蓋？" data-tool="題目不一定先出現；先找到你願意停下來看的地方">
+  <section class="sc" data-bg="day" data-no="03" data-en="EXPLORE" data-zh="地圖很大：我到底想在哪裡蓋？" data-tool="先找到你願意停下來看的地方，題目就在那邊">
    <div class="ly col">
     <div class="row gs">
      <div class="pn node" data-step="1.3"><h4>FIELD</h4><div class="row gs"><i data-bd="cabin" data-z="7"></i><span>教學現場</span></div><div class="xs">國中・高中日語教學</div></div>
@@ -258,7 +322,7 @@ body.rec #ctl,body.rec #start{display:none}
     <div class="tip sm" data-step="3.72" style="width:260px">說得到這個程度<br>＝<span class="yel">可以去找老師了</span></div>
    </div>
    <div class="ly col" data-step="4" data-until="5" style="gap:14px">
-    <div class="row wrapx" style="max-width:1000px;gap:14px 18px"><span class="tip" data-step="4.3">「這個問題太大。」</span><span class="tip" data-step="4.45">「這個資料拿不到。」</span><span class="tip" data-step="4.58">「真正有趣的是旁邊那一小塊。」</span><span class="tip yel" data-step="4.78">「我以為要問 A，其實想知道的是 B。」</span></div>
+    <div class="row wrapx" style="max-width:1000px;gap:14px 18px"><span class="tip" data-step="4.3">「這個問題太大。」</span><span class="tip" data-step="4.45">「這個資料拿不到。」</span><span class="tip" data-step="4.52">「這個先行研究已經有人做過了。」</span><span class="tip" data-step="4.62">「真正有趣的是旁邊那一小塊。」</span><span class="tip yel" data-step="4.78">「我以為要問 A，其實想知道的是 B。」</span></div>
     <div class="sm" data-step="4.1" style="order:-1">讀文獻・跟老師談・試方法之後才會發現：</div>
    </div>
    <div class="ly gl" data-step="5">
@@ -269,11 +333,14 @@ body.rec #ctl,body.rec #start{display:none}
   </section>
 
   <!-- 04 FOG OF WAR -->
-  <section class="sc" data-bg="night" data-no="04" data-en="FOG OF WAR" data-zh="地圖不用全部開完" data-tool="每一輪探索，都要有一個決策目的">
+  <section class="sc" data-bg="night" data-no="04" data-en="FOG OF WAR" data-zh="地圖不用全部開完" data-tool="每一輪探索，都先知道自己讀的目標">
    <div class="ly gl">
     <div class="col" style="display:flex;gap:16px;width:520px" data-step="0">
+     <div class="row" style="gap:22px"><div class="fmap" id="fmap"><b class="mkw" data-step="3.5" style="left:102px;top:58px"><i class="mk blink"></i></b></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:16px">
      <div><div class="row" style="justify-content:space-between"><span>地圖探索</span><span class="en yel">87%</span></div><div class="bar" style="height:36px"><i class="fill fx" data-step="0.45" style="--w:87%"></i></div></div>
      <div><div class="row" style="justify-content:space-between"><span>建築進度</span><span class="en red">3%</span></div><div class="bar" style="height:36px"><i class="fill fx" data-step="0.75" style="--w:3%;background:#ff7b7b"></i></div></div>
+      </div></div>
      <div class="row" data-step="1" data-until="3" style="justify-content:flex-start"><i data-sp="player" data-z="5"></i>
       <div><div class="bubble sm pop" data-step="1.25">再讀一篇……</div></div><div class="bubble sm pop" data-step="1.4">再一篇就開始</div><div class="bubble sm pop" data-step="1.75">（比較安心）</div></div>
     </div>
@@ -282,7 +349,8 @@ body.rec #ctl,body.rec #start{display:none}
       <div class="sm gray" data-step="2.7" style="margin-top:6px">全部讀完才開始？那我現在還在讀。</div></div>
      <div class="pn" data-step="3" style="margin-top:-150px"><h4>SYSTEM</h4>你下一步需要的是……
       <div class="row" style="margin-top:10px;color:#fff"><span class="btn dim fx" data-step="3.75">更多地圖</span><span class="btn hot" data-step="3.5">▸ 一個選擇</span></div>
-      <div class="sm" data-step="3.2" style="margin-top:8px">下一篇會改變我的<b>哪個決定</b>？</div></div>
+      <div class="sm" data-step="3.2" style="margin-top:8px">讀下一篇之前：我讀它的<b>目標是什麼</b>？<br>手上的文獻，真的<b>不夠我啟動</b>嗎？</div>
+      <div class="xs" data-step="3.85" style="margin-top:6px">能不能開始，取決於：研究的<b>清晰度</b>＋對<b>重要相關文獻</b>的理解</div></div>
     </div>
    </div>
   </section>
@@ -305,8 +373,8 @@ body.rec #ctl,body.rec #start{display:none}
    </div>
    <div class="ly gl" data-step="2" data-until="3">
     <div class="col" style="display:flex;gap:12px;width:520px">
-     <div class="pn sm" data-step="2.1"><h4>1 HOW IT WAS BUILT</h4>這棟怎麼蓋的？＝ <b>作者說了什麼</b></div>
-     <div class="pn sm" data-step="2.24"><h4>2 MY VIEW</h4>我怎麼看它？</div>
+     <div class="pn sm" data-step="2.1"><h4>1 WHY &amp; HOW IT WAS BUILT</h4>這棟房子<b>為什麼</b>被蓋出來、<b>怎麼</b>蓋的？<div class="xs">為什麼＝研究背景・目的・問題<br>怎麼蓋＝對象・方法・資料 → 得到什麼結論</div></div>
+     <div class="pn sm" data-step="2.24"><h4>2 MY VIEW</h4>我怎麼看它？<b>寫下來</b><div class="xs">哪一根柱子、哪面牆、哪個設計，值得我借鑑？</div></div>
      <div class="pn sm" data-step="2.32" style="background:#ffe98a"><h4>3 MY PLOT</h4>我的房子要蓋在它旁邊的<b>哪裡</b>？<br>接著蓋／補一塊／蓋在沒人蓋的地方</div></div>
     <div class="col" style="display:flex;gap:26px;align-items:center"><div class="row" style="align-items:flex-end;gap:10px"><div class="col row gs"><i data-bd="cabin" data-z="15"></i><span class="sign xs">前人</span></div>
      <div class="col row gs" data-step="2.36"><div style="width:120px;height:96px;outline:5px dashed var(--yel);outline-offset:-5px;display:flex;align-items:center;justify-content:center" class="yel sm blink">我的<br>建地</div><span class="sign xs">我</span></div>
@@ -325,13 +393,13 @@ body.rec #ctl,body.rec #start{display:none}
    </div>
    <div class="ly col" data-step="4">
     <div class="tip">✘ 「我記得這篇很重要」<br><span class="grn">✔ 「我知道它為什麼現在要出現在這裡」</span></div>
-    <div class="mid" data-step="4.5">先行研究是<span class="yel">鄰居</span>，不是你的磚</div>
+    <div class="mid" data-step="4.5">先行研究是<span class="yel">鄰居</span>，不是你的建材</div>
     <div class="sm" data-step="4.72">看懂別人蓋到哪裡，才知道自己從哪裡接著蓋</div>
    </div>
   </section>
 
   <!-- 06 BLUEPRINT -->
-  <section class="sc" data-bg="blue" data-no="06" data-en="BLUEPRINT" data-zh="我到底要蓋什麼？問題決定材料" data-tool="資料能回答到哪裡，就只說到哪裡">
+  <section class="sc" data-bg="blue" data-no="06" data-en="BLUEPRINT" data-zh="我到底要蓋什麼？問題決定材料" data-tool="蒐集的資料要呼應研究目的，否則蓋不出符合藍圖的建築">
    <div class="ly col" data-step="0" data-until="1">
     <div class="mid gray"><span style="position:relative">材料越多越好？<s class="ln fx" data-step="0.5"></s></span></div>
     <div class="big" data-step="0.6">我要蓋的東西，<span class="yel">到底需要什麼？</span></div>
@@ -363,21 +431,21 @@ body.rec #ctl,body.rec #start{display:none}
     <div class="sm">教科書版：</div>
     <div class="row gs" style="position:relative"><span class="btn" data-step="0.45">選題</span>▸<span class="btn" data-step="0.5">文獻</span>▸<span class="btn" data-step="0.56">方法</span>▸<span class="btn" data-step="0.62">蒐集</span>▸<span class="btn" data-step="0.68">分析</span>▸<span class="btn" data-step="0.74">寫完</span></div>
     <div class="sm gray" data-step="0.85">（看起來很像生產線）</div>
+    <div class="row gl" data-step="0.92"><div class="wall" id="wall"></div><div class="tip mid">在成為熟練的研究者之前<br>我們沒辦法<span class="yel">總是一步到位</span></div></div>
    </div>
    <div class="ly gl" data-step="1">
     <div class="loop"><div class="ring"></div>
      <div class="pn n" data-step="1.25" style="left:50%;top:6%">想蓋什麼</div><div class="pn n" data-step="1.36" style="left:88%;top:28%">找材料</div><div class="pn n" data-step="1.46" style="left:88%;top:72%">蓋一部分</div>
      <div class="pn n" data-step="1.58" style="left:50%;top:94%">站遠一點看</div><div class="pn n" data-step="1.7" style="left:12%;top:72%">修改</div><div class="pn n" data-step="1.78" style="left:12%;top:28%">再蓋</div>
      <div class="en yel pop" data-step="1.88" style="position:absolute;left:0;right:0;top:44%;text-align:center;font-size:16px">LOOP ×N</div></div>
-    <div style="width:640px;position:relative;height:340px">
-     <div class="ly col tl" data-step="2" data-until="4" style="align-items:stretch;justify-content:center;gap:14px">
+    <div style="width:640px;position:relative;height:340px">     <div class="ly col tl" data-step="2" data-until="4" style="align-items:stretch;justify-content:center;gap:14px">
       <div class="row" style="justify-content:space-between;white-space:nowrap"><div class="pn sm"><h4>2021.06</h4>訪談</div><div class="en yel" style="font-size:15px" data-step="2.45">◀─ 2 YEARS ─▶</div><div class="pn sm" data-step="2.25"><h4>2023.05–06</h4>口試・修改・畢業</div></div>
       <div class="row gs wrapx" data-step="2.6"><span class="btn sm" data-step="2.7">整理</span><span class="btn sm" data-step="2.75">分析</span><span class="btn sm" data-step="2.8">解釋</span><span class="btn sm" data-step="2.85">發表</span><span class="btn sm" data-step="2.9">修改</span><span class="btn sm" data-step="2.95">繼續寫</span></div>
-      <div class="tip" data-step="3">訪談做完 <span class="red en">≠</span> 論文做完<div class="sm yel">只是材料運到工地，工人還沒上班</div></div>
+      <div class="tip" data-step="3">資料蒐集完 <span class="red en">≠</span> 論文做完<div class="sm yel">只是材料運到工地，工人還沒上班</div></div>
      </div>
      <div class="ly col" data-step="4" style="gap:14px">
       <div class="mid"><span style="position:relative" class="gray">論文完成 ??%<s class="ln fx" data-step="4.2"></s></span></div>
-      <div class="pn" style="width:100%"><h4>WHERE AM I STUCK?</h4><div class="row gs wrapx" style="color:#fff"><span class="btn sm pop" data-step="4.5">題目</span><span class="btn sm pop" data-step="4.56">文獻</span><span class="btn sm pop" data-step="4.62">資料</span><span class="btn sm pop" data-step="4.68">分析</span><span class="btn sm pop" data-step="4.74">論證</span><span class="btn sm pop" data-step="4.8">寫作</span><span class="btn sm pop" data-step="4.88">缺回饋</span></div></div>
+      <div class="lava" style="width:100%"><h4>WHERE AM I STUCK?</h4><div class="row wrapx" style="color:#fff;gap:14px 16px"><span class="btn sm pop stone" data-step="4.5">方向</span><span class="btn sm pop stone" data-step="4.56">文獻</span><span class="btn sm pop stone" data-step="4.62">資料</span><span class="btn sm pop stone" data-step="4.68">分析</span><i style="flex-basis:100%;height:0"></i><span class="btn sm pop stone" data-step="4.74">論證</span><span class="btn sm pop stone" data-step="4.8">寫作</span><span class="btn sm pop stone" data-step="4.88">缺回饋</span></div></div>
      </div>
     </div>
    </div>
@@ -403,7 +471,7 @@ body.rec #ctl,body.rec #start{display:none}
    <div class="ly gl" data-step="3" data-until="4">
     <div class="col" style="display:flex;gap:12px;align-items:flex-start">
      <div class="bubble sm">我想做這個……</div><div class="bubble sm" data-step="3.14" style="margin-left:60px">那你為什麼想做？</div><div class="bubble sm" data-step="3.22">（回去想）……</div>
-     <div class="en yel sm" data-step="3.28">TALK ×N</div></div>
+     <div class="row" data-step="3.28"><span class="en yel sm">TALK ×N</span><div class="pn row gs" style="padding:6px 10px"><div class="slot"><i data-sp="paper" data-z="5"></i></div><span class="arrow" style="font-size:20px;color:#555">▶</span><div class="slot"><i data-sp="emerald" data-z="5"></i></div></div></div></div>
     <div class="col" style="display:flex;gap:14px;width:540px">
      <div class="pn sm" data-step="3.36">第一次沒說「好」<b>＝ 很正常</b><br>老師也在確認：這是不是他幫得上忙的</div>
      <div class="tip" data-step="3.75">不是找「最好的老師」<br>是確認<span class="yel">能不能一起把這件事做完</span></div></div>
@@ -412,7 +480,7 @@ body.rec #ctl,body.rec #start{display:none}
     <div class="col row gs"><i data-sp="player" data-z="8" data-c="#7a4cc0"></i><span class="sign sm">知道哪裡會塌的<br>老玩家</span></div>
     <div class="col" style="display:flex;gap:14px;align-items:flex-start">
      <div class="bubble pop" data-step="4.38">這裡不要挖。</div><div class="bubble pop" data-step="4.5">這個材料撐不住。</div><div class="bubble pop" data-step="4.62">這個設計做到最後會很麻煩。</div>
-     <div class="sm yel" data-step="4.82">→ 這些建議通常很真實，請認真聽</div></div>
+     <div class="sm yel" data-step="4.82">→ 這些建議都很真實，請認真聽</div></div>
    </div>
    <div class="ly col" data-step="5">
     <div class="row gl st"><div class="pn" style="text-align:center;width:300px"><h4>ADVISOR</h4>老師的專業<br><span class="sm">讓研究更可行、更紮實</span></div><div class="en mid" style="align-self:center">+</div><div class="pn" data-step="5.45" style="text-align:center;width:300px;background:#ffe98a"><h4>OWNER</h4>你的研究所有權<br><span class="sm">做得下去、心裡過得去</span></div></div>
@@ -436,7 +504,7 @@ body.rec #ctl,body.rec #start{display:none}
    </div>
    <div class="ly col" data-step="2" data-until="3">
     <div class="en yel sm">CHECKPOINTS（都在口試之前）</div>
-    <div class="row gl"><div class="pn" data-step="2.2" style="text-align:center"><h4>2021.12</h4>研討會發表<div class="xs">&nbsp;</div></div><div class="pn" data-step="2.4" style="text-align:center"><h4>2022.03</h4>期中發表<div class="xs red">學系規定必過</div></div><div class="arrow" data-step="2.5">▶</div><div class="sign" data-step="2.5">口試</div></div>
+    <div class="row gl"><div class="pn" data-step="2.2" style="text-align:center"><h4>2021.12</h4>研討會發表<div class="xs">&nbsp;</div></div><div class="pn" data-step="2.4" style="text-align:center"><h4>2022.03</h4>期中發表<div class="xs red">依學系規定</div></div><div class="arrow" data-step="2.5">▶</div><div class="sign" data-step="2.5">口試</div></div>
     <div class="tip" data-step="2.7">逼自己把研究<span class="yel">說給別人聽</span> → 提早發現問題</div>
    </div>
    <div class="ly gl" data-step="3" style="align-items:flex-end;padding-bottom:30px">
@@ -531,14 +599,14 @@ body.rec #ctl,body.rec #start{display:none}
    <div class="ly col tl" data-step="0" data-until="2" style="align-items:center">
     <div class="row gl"><div class="pn row"><i data-sp="player" data-z="4"></i><div><h4>PLAYER</h4>每週可研究 <b class="en">15h</b></div></div>
      <div class="col" style="display:flex;gap:12px;width:640px">
-      <div data-step="0.42"><div class="row" style="justify-content:space-between"><span>藍圖 A　需要 12h</span><span class="grn pop" data-step="0.6">✔ 可以</span></div><div class="bar" style="overflow:visible"><i class="fill fx" data-step="0.45" style="--w:25%"></i><i style="position:absolute;left:31.5%;top:-8px;bottom:-8px;width:4px;background:#fff"></i></div></div>
-      <div data-step="0.72"><div class="row" style="justify-content:space-between"><span>藍圖 B　需要 47h</span><span class="red pop" data-step="0.95">✘ ……嗯。</span></div><div class="bar" style="overflow:visible"><i class="fill fx" data-step="0.75" style="--w:98%;background:#ff5f5f"></i><i style="position:absolute;left:31.5%;top:-8px;bottom:-8px;width:4px;background:#fff"></i></div><div class="xs" style="margin-left:calc(31.5% - 30px)">▲ 15h</div></div>
+      <div data-step="0.42"><div class="row" style="justify-content:space-between"><span class="row gs"><i data-bd="cabin" data-z="5"></i>藍圖 A　需要 12h</span><span class="grn pop" data-step="0.6">✔ 可以</span></div><div class="bar" style="overflow:visible"><i class="fill fx" data-step="0.45" style="--w:25%"></i><i style="position:absolute;left:31.5%;top:-8px;bottom:-8px;width:4px;background:#fff"></i></div></div>
+      <div data-step="0.72"><div class="row" style="justify-content:space-between"><span class="row gs"><i data-bd="castle" data-z="5"></i>藍圖 B　需要 47h</span><span class="red pop" data-step="0.95">✘ ……嗯。</span></div><div class="bar" style="overflow:visible"><i class="fill fx" data-step="0.75" style="--w:98%;background:#ff5f5f"></i><i style="position:absolute;left:31.5%;top:-8px;bottom:-8px;width:4px;background:#fff"></i></div><div class="xs" style="margin-left:calc(31.5% - 30px)">▲ 15h</div></div>
      </div></div>
     <div class="row gl" data-step="1"><span class="btn mid" style="position:relative">我再努力一點<s class="ln fx" data-step="1.45"></s></span><div class="tip" data-step="1.5">每週工作 20h 的解法<br>不該永遠是<span class="red">少睡 20h</span></div></div>
    </div>
    <div class="ly col" data-step="2" data-until="3">
     <div class="pn"><h4>SYSTEM</h4>是否調整工程？<div class="row" style="margin-top:12px;color:#fff"><span class="btn hot pop" data-step="2.2">縮小範圍</span><span class="btn hot pop" data-step="2.32">延長時間</span><span class="btn hot pop" data-step="2.45">增加資源／找人幫忙</span></div></div>
-    <div class="mid" data-step="2.7">研究設計本身，<span class="yel">是可以調的</span></div>
+    <div class="mid" data-step="2.7">基於你的人生條件，做<span class="yel">最合理的研究設計</span></div>
    </div>
    <div class="ly col" data-step="3" data-until="4">
     <div class="sm">一棟論文的工期</div>
@@ -563,7 +631,7 @@ body.rec #ctl,body.rec #start{display:none}
     <div class="row gl" data-step="1.6"><span class="btn mid" style="position:relative">2 年畢業＝成功<s class="ln fx" data-step="1.7"></s></span><span class="btn mid" style="position:relative">5、6 年＝失敗<s class="ln fx" data-step="1.85"></s></span></div>
    </div>
    <div class="ly gl" data-step="2" data-until="3">
-    <div class="col" style="display:flex;gap:12px;width:420px"><div class="mid" style="text-align:left">真正有限的<br><span style="position:relative">不是錢<s class="ln fx" data-step="2.5"></s></span></div><div class="tip sm">你知不知道自己的資源<br><span class="yel">花到哪裡去了？</span></div></div>
+    <div class="col" style="display:flex;gap:12px;width:420px"><div class="mid" style="text-align:left">真正有限的<br><span class="yel">不只是錢</span></div><div class="tip sm">你知不知道自己的資源<br><span class="yel">花到哪裡去了？</span></div></div>
     <div class="pn card" style="width:420px" data-step="2.55"><h4>REAL RESOURCES</h4>
      <div class="r" style="font-size:22px"><span style="width:90px">時間</span><div class="bar" style="height:22px"><i class="fill fx" data-step="2.6" style="--w:55%"></i></div></div>
      <div class="r" style="font-size:22px"><span style="width:90px">注意力</span><div class="bar" style="height:22px"><i class="fill fx" data-step="2.68" style="--w:40%;background:#f2c94c"></i></div></div>
@@ -579,7 +647,7 @@ body.rec #ctl,body.rec #start{display:none}
   </section>
 
   <!-- 12 MY SAVE FILE -->
-  <section class="sc" data-bg="day" data-no="12" data-en="MY SAVE FILE" data-zh="這只是我的存檔，不是攻略本" data-tool="時間線不是比快慢，而是辨認每一階段要解決的問題">
+  <section class="sc" data-bg="day" data-no="12" data-en="MY SAVE FILE" data-zh="這是我的存檔" data-tool="時間線不是比快慢，而是辨認每一階段要解決的問題">
    <div class="ly col" id="tlwrap">
     <div class="tlx">
      <div class="tn" data-step="1.0"><div class="d">2019.09</div><div class="e">教學場域</div><div class="w">開始注意到問題</div></div>
@@ -589,8 +657,8 @@ body.rec #ctl,body.rec #start{display:none}
      <div class="tn" data-step="1.66"><div class="d">2022.03</div><div class="e">期中發表</div><div class="w">再次檢查結構</div></div>
      <div class="tn" data-step="1.82"><div class="d">2023.05–06</div><div class="e">口試・修改<br>畢業</div><div class="w">完成並說明整棟建築</div></div>
     </div>
-    <div class="sm yel" data-step="2" data-until="3">▲ 下排寫的不是「完成了什麼」，而是「當時在處理哪一種問題」</div>
-    <div class="row gl" data-step="3"><div class="mid">他的出生點，<span class="yel">跟你一樣嗎？</span></div><div style="position:relative;width:200px;height:50px"><b class="stamp" data-step="3.1" style="left:0;top:0">不是攻略本</b></div></div>
+    <div class="mid" data-step="2">給自己一個明確的<span class="yel">「當下的目標」</span></div>
+    <div class="tip sm" data-step="3">在碩士班，沒有人會逼你，也不會自動就畢業</div>
    </div>
   </section>
 
@@ -621,34 +689,40 @@ body.rec #ctl,body.rec #start{display:none}
     <div class="tip sm" data-step="5.55">論文總有一天會寫完。一起討論、一起困惑、一起抱怨的這段時間，不一定還會再有。</div>
    </div>
    <div class="ly col" data-step="6" data-until="7"><div class="mid">地圖很大，資源有限。</div><div class="big yel" data-step="6.45" style="font-size:56px">這個存檔，你想留下什麼？</div></div>
-   <div class="ly col" data-step="7"><div class="logo" style="font-size:54px">MASTERCRAFT</div><div class="big" style="margin-top:30px">謝謝大家</div><div class="en sm yel blink">SAVING WORLD...</div></div>
+   <div class="ly gl" data-step="7"><div class="endp" id="endp"></div><div class="col row"><div class="logo" style="font-size:54px">MASTERCRAFT</div><div class="big" style="margin-top:30px">謝謝大家</div><div class="en sm yel blink">SAVING WORLD...</div></div></div>
   </section>
 
   <!-- 14 CHECKLIST -->
   <section class="sc nohd" data-bg="night" data-no="14" data-en="CHECKLIST" data-zh="" data-tool="">
    <div class="ly col" style="gap:10px">
-    <div class="mid"><span class="en yel" style="font-size:18px">MASTERCRAFT</span>　玩家檢查表 <span class="sm gray">不是評分表，不用一次填完</span></div>
-    <div class="row wrapx" style="gap:14px 16px">
-     <div class="pn ck"><h4>1｜我的 Spawn Point</h4><div>□ 我已經有什麼？（經驗、材料、文獻、人）<br>□ 我最稀缺的是什麼？</div></div>
-     <div class="pn ck"><h4>2｜我想去哪裡</h4><div>□ 哪個現象／文本／經驗讓我一直在意？<br>□ 只能問一個問題，我想知道什麼？</div></div>
-     <div class="pn ck"><h4>3｜我想蓋什麼</h4><div>□ 研究真正想理解／說明什麼？<br>□ 至少需要看到什麼資料？</div></div>
-     <div class="pn ck"><h4>4｜前人的建築與我的材料</h4><div>□ 先行研究蓋到哪裡？我要接在哪裡蓋？<br>□ 我蒐集的資料與考察，夠回答問題嗎？</div></div>
-     <div class="pn ck"><h4>5｜我卡在哪個 Build Loop</h4><div>□ 題目／文獻／資料／分析／論證／<br>　寫作／回饋，是哪一種卡點？</div></div>
-     <div class="pn ck"><h4>6｜我的多人伺服器</h4><div>□ 我的研究跟誰聊得起來？誰在我旁邊？<br>□ 用 AI 前，查過學校與領域的規範了嗎？</div></div>
-     <div class="pn ck"><h4>7｜Base Management</h4><div>□ 每週固定生活成本是多少？<br>□ 真正能給研究的時間與精力？</div></div>
-     <div class="pn ck"><h4>8｜Scope Check</h4><div>□ 算進分析、寫作、修改後還合理嗎？<br>□ 縮小範圍／延長時間／增加資源？</div></div>
-     <div class="pn ck"><h4>9｜我的勝利條件</h4><div>□ 畢業時，除了論文還想留下什麼？<br>□ 怎樣才叫「玩得好」？</div></div>
+    <div class="mid"><span class="en yel" style="font-size:18px">MASTERCRAFT</span>　玩家檢查表</div>
+    <div class="row" style="gap:16px">
+    <div class="row wrapx" style="gap:10px 12px;width:1034px;flex:none">
+     <div class="pn ck"><h4><span class="cki" style="--i:0"><i data-sp="bed" data-z="3"></i></span>1｜我的 Spawn Point</h4><div>□ 寫下三樣已經有的：經驗／資料／人<br>□ 圈出最缺的：時間・錢・精力・支持</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:1"><i data-sp="compass" data-z="3"></i></span>2｜我想去哪裡</h4><div>□ 我一直在意的現象，寫成一句話<br>□ 這週找一個人，把它說給他聽</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:2"><i data-sp="bprint" data-z="3"></i></span>3｜我想蓋什麼</h4><div>□ 填空：我想知道＿＿＿＿＿<br>□ 所以至少要看到＿＿＿＿的資料</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:3"><i data-sp="book" data-z="3"></i></span>4｜前人的建築與我的建地</h4><div>□ 選三篇最相關的：為何蓋？怎麼蓋？<br>□ 我的房子要蓋在它們旁邊的哪裡？</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:4"><i data-sp="rod" data-z="3"></i></span>5｜我卡在哪個 Build Loop</h4><div>□ 圈一個：方向・文獻・資料・分析・<br>　論證・寫作・回饋　→ 下一步找誰？</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:5"><i data-sp="emerald" data-z="3"></i></span>6｜我的多人伺服器</h4><div>□ 寫下兩個能聊研究的人，約好時間<br>□ 用 AI 前，查過學校與領域的規範</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:6"><i data-sp="leg" data-z="3"></i></span>7｜Base Management</h4><div>□ 列出每週固定成本：睡・課・工作…<br>□ 168h 扣完，研究剩＿＿小時</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:7"><i data-sp="plank" data-z="3"></i></span>8｜Scope Check</h4><div>□ 排進分析、寫作、修改後還合理嗎？<br>□ 不合理就選：縮小／延長／找資源</div></div>
+     <div class="pn ck"><h4><span class="cki" style="--i:8"><i data-sp="clock" data-z="3"></i></span>9｜勝利條件與當下目標</h4><div>□ 畢業時，除了論文還想留下什麼？<br>□ 當下目標：＿月＿日前完成＿＿＿</div></div>
+    </div>
+    <div class="arrow">▶</div>
+    <div class="col row gs ckout"><div class="slot glow" style="width:96px;height:96px"><i data-bd="cabin" data-z="12"></i></div><div class="sm yel" style="white-space:nowrap">你的下一步</div></div>
     </div>
    </div>
   </section>
 
-  <div id="toast"><i data-sp="gem" data-z="6"></i><div><div class="a">進度達成！帶走一個判斷工具</div><div class="b"></div></div></div>
+  <div id="toast"><span id="tic" style="flex:none"></span><div><div class="a">進度達成！帶走一個判斷工具</div><div class="b"></div></div></div>
+  <div id="stat"><div id="hearts"></div><div id="food"></div></div>
+  <div id="hot"></div>
   <div id="cap"></div>
-  <div id="hud"><div id="hearts"></div><div id="xp"><i></i></div><div id="lvn">LV 00</div></div>
+  <div id="hud"><div id="xp"><i></i></div><div id="lvn">LV 00</div></div>
   <div id="pg" style="position:absolute;right:16px;top:700px;font:10px var(--px);color:#fff;opacity:.6"></div>
   <div id="help" style="position:absolute;inset:0;z-index:40;background:rgba(0,0,0,.9);display:flex;flex-direction:column;gap:18px;align-items:center;justify-content:center;cursor:pointer">
    <div class="logo" style="font-size:56px">MASTERCRAFT</div>
-   <div class="pn" style="font-size:22px;line-height:1.7"><h4>CONTROLS</h4>→／空白鍵／點一下：下一步　　←：上一步<br>↓：下一關　　↑：回到本關開頭／上一關<br>N：顯示／隱藏講稿　　F：全螢幕　　H：這張說明</div>
+   <div class="pn" style="font-size:22px;line-height:1.7"><h4>CONTROLS</h4>→／空白鍵／點一下：下一步　　←：上一步<br>↓：下一關　　↑：回到本關開頭／上一關<br>N：顯示／隱藏講稿　　P：彈出講稿視窗（同步）<br>F：全螢幕　　H：這張說明</div>
    <div class="btn hot mid">按任意鍵或點一下開始</div></div>
   <div id="curtain"></div>
   </div></div>
@@ -656,13 +730,13 @@ body.rec #ctl,body.rec #start{display:none}
 </div>
 <audio id="au" preload="auto"></audio>
 <script>
-const D={"total": 1267.762, "scenes": [{"start": 1.0, "segs": [{"t": "大家好，歡迎來到 Mastercraft，碩士世界。先問大家一個問題：如果碩士班是一款遊戲，怎樣才算玩得好？", "start": 1.0, "dur": 10.865}, {"t": "最快畢業？論文最厚？發表最多？嗯，聽起來都像成就，但是，都不一定。", "start": 12.315, "dur": 7.635}, {"t": "我後來覺得，碩士班比較像沙盒遊戲。系統有規則、有期限，還有一棟離開前一定要蓋完的大型建築，叫做論文。但除此之外，你要往哪裡走、想蓋什麼、要留多少資源給工作跟生活，沒有標準答案。", "start": 20.4, "dur": 19.942}, {"t": "所以今天沒有兩年畢業攻略。我只是把自己的存檔打開給大家看：我當時有什麼資源、遇到什麼問題、怎麼做選擇。看完，請回頭看你自己的世界。記得先定義自己的勝利條件。不然後面談效率，只是在比誰跑得快，卻沒有人知道終點在哪裡。", "start": 40.792, "dur": 22.995}], "end": 64.88645833333334}, {"start": 64.88645833333334, "segs": [{"t": "第一關，出生點。玩過的人都知道，有人一出生，旁邊就是村莊。有人一出生，在海中央的小島，島上只有一棵樹。同樣叫做第一天，心情完全不一樣。", "start": 64.886, "dur": 15.37}, {"t": "碩一也是。有人已經有場域經驗，有人要打工，有人有家庭責任。時間、金錢、精力、支持系統，每個人的血條都長得不一樣。", "start": 80.706, "dur": 12.756}, {"t": "我的存檔是這樣：2019 年 9 月，我就已經在跟研究相關的場域教課了。2020 年 9 月，才進碩士班。也就是說，我進場之前，那一塊地圖就已經開過了。", "start": 93.912, "dur": 15.263}, {"t": "還有一個重要的免責聲明：我的存檔，是教育類的實踐研究。也就是在教學現場做課程，再去研究它。如果你做的是別的領域、別的方法，地形會不一樣。我講的東西，請當成參考座標，不是衛星導航。", "start": 109.625, "dur": 19.6}, {"t": "所以如果我某個階段比同學早做完，不一定是我比較有效率，可能只是我偷跑了一年。這一關的判斷工具：不比進度，先確認條件。", "start": 129.675, "dur": 12.894}], "end": 143.66866666666667}, {"start": 143.66866666666667, "segs": [{"t": "第二關，世界規則。沙盒不是無限自由。學分、研究倫理、論文、口試、修業期限，這些是硬規則，系統寫死的，沒得商量。", "start": 143.669, "dur": 13.268}, {"t": "但是規則以外，怎麼配置這幾年，是你的。我最後要過的關，同樣是論文跟口試。可是從教學現場、訪談、研討會、期中發表到畢業，這條路，沒有人幫我開自動導航。", "start": 157.387, "dur": 16.913}, {"t": "很多焦慮，其實來自把別人的玩法，誤認成系統規定。一定要發幾篇、一定要幾年畢業、一定要用哪個方法。先查一下：這是規則書寫的，還是學長姐的傳說？判斷工具：把硬規則，跟別人的攻略分開。", "start": 174.75, "dur": 19.623}], "end": 195.473625}, {"start": 195.473625, "segs": [{"t": "第三關，探索。地圖這麼大，我到底要在哪裡蓋？", "start": 195.474, "dur": 4.747}, {"t": "很多人以為，研究是從一個漂亮的題目開始的。我的不是。大學修教育學程的時候，我進過國中、高中教日語。當時吸引我的，不是哪個理論的名字，而是一個很樸素的困惑：如果換一種課程設計，能不能改善現場的問題？", "start": 200.67, "dur": 20.924}, {"t": "進了碩班以後，才靠著讀先行研究、跟人討論，在現場跟文獻之間來回走，慢慢把這個困惑，磨成一個可以研究的問題。注意，是來回走，不是一條直線。", "start": 222.044, "dur": 15.322}, {"t": "所以如果你現在還沒有題目，先別慌。題目不一定先出現。先找到那個你願意停下來，多看幾眼的地方。", "start": 237.816, "dur": 10.27}], "end": 249.186}, {"start": 249.186, "segs": [{"t": "第四關，命名牌。剛進研究所，第一個焦慮通常是：我的論文題目，到底要寫什麼？回頭看，我會給一個有點吊詭的答案：論文題目，沒有你想像中那麼重要。", "start": 249.186, "dur": 15.428}, {"t": "不是研究主題不重要。而是最後印在封面上的那一行字，通常不是你一開始就能決定的。就像沒有人是先把招牌做好，才開始蓋房子的。", "start": 265.064, "dur": 12.845}, {"t": "研究本來就是從寬到窄。一開始你可能只知道：我對某個現象很好奇。我想研究某一群人。我覺得某件事好像有問題。最近讀到一個概念，很有意思。這樣，就夠你出發了。", "start": 278.359, "dur": 16.622}, {"t": "一開始真正重要的，是你能不能把「我到底想知道什麼」，講給另一個人聽，而且他聽得懂。能說到這個程度，你就有東西可以拿去找老師了。", "start": 295.431, "dur": 12.697}, {"t": "接下來讀文獻、跟老師談、試方法，你才會慢慢發現：這個問題太大。這個資料拿不到。真正有趣的，是旁邊那一小塊。甚至，我以為我要問 A，結果我真正想知道的是 B。", "start": 308.578, "dur": 16.843}, {"t": "所以題目不是起點。它比較像是研究收斂之後，替你現在的位置貼上的一張標籤。你不用先把整張地圖畫完，只要知道：我現在想往哪個方向走。這樣就夠了。", "start": 325.871, "dur": 15.17}], "end": 342.1405}, {"start": 342.1405, "segs": [{"t": "第五關，戰爭迷霧。這一關有一種很常見的玩家：地圖探索，百分之八十七。建築進度，百分之三。", "start": 342.14, "dur": 9.983}, {"t": "他每天都很忙，忙著開地圖。再讀一篇，再讀一篇就可以開始了。聽起來很用功。但有時候，再讀一篇，只是比較安心。", "start": 352.573, "dur": 12.112}, {"t": "我自己回頭看，題目還不清楚的時候，真正有幫助的，不是等一切整理好，而是帶著目前的理解跟困惑，直接去找人討論。如果要先把日語教育全部讀完才開始，那我現在應該還在讀。", "start": 365.135, "dur": 17.724}, {"t": "所以讀下一篇之前，問自己一句：它會改變我的哪一個決定？你下一步需要的，是更多地圖，還是一個選擇？每一輪探索，都要有一個決策目的。", "start": 383.31, "dur": 13.823}], "end": 398.232375}, {"start": 398.232375, "segs": [{"t": "第六關，前人的建築。來，打開文獻軟體。PDF，327 個。恭喜，你是一位優秀的觀光客。", "start": 398.232, "dur": 10.401}, {"t": "先行研究不是你背包裡的材料。它是別人已經蓋好的房子。存了 327 篇，意思是你參觀了 327 棟，還拍了照。但是拍照，不等於你會蓋。", "start": 409.083, "dur": 13.998}, {"t": "參觀要看三件事：這一棟是怎麼蓋的，也就是作者說了什麼。我怎麼看它。還有，我的房子要蓋在它旁邊的哪裡：是接著蓋、補一塊，還是蓋在它沒蓋到的地方。如果重新整理一次，我會更刻意把作者的說法，跟它和我的研究的關聯，分開記，而且留下頁碼，隨時回得去原文。", "start": 423.531, "dur": 26.641}, {"t": "那材料是什麼？是你為了這個研究，親手蒐集的資料，加上你自己的考察。別人的房子再漂亮，也不能拆來當你的牆。", "start": 450.622, "dur": 10.782}, {"t": "所以寫作的時候，需要的不是「我記得這篇很重要」，而是「我知道它為什麼現在要出現在這裡」。判斷工具：先行研究是鄰居，不是你的磚。看懂別人蓋到哪裡，才知道自己要從哪裡接著蓋。", "start": 461.854, "dur": 18.072}], "end": 481.0257916666667}, {"start": 481.0257916666667, "segs": [{"t": "第七關，藍圖。找到想蓋的位置以後，下一個問題不是材料越多越好，而是：我要蓋的東西，到底需要什麼？", "start": 481.026, "dur": 10.563}, {"t": "我原本的關心是，換一種課程設計，能不能改善現場的問題。但是「改善」這兩個字太大了。我要看的是學生的感受？經驗？行為？表現？還是某種變化？問題不一樣，要的材料就不一樣。", "start": 492.039, "dur": 18.897}, {"t": "想知道學生怎麼看這門課，滿意度跟訪談可以回答。想說能力有沒有變化，就需要跟能力目標對得上的表現資料。", "start": 511.386, "dur": 10.875}, {"t": "不能因為背包裡只有玻璃，就決定整棟房子用玻璃蓋。也不能拿「學生說很好」，去證明能力一定提升。", "start": 522.711, "dur": 9.804}, {"t": "請填空：我想知道什麼，所以我至少需要看到什麼。資料能回答到哪裡，話就只說到哪裡。", "start": 532.964, "dur": 8.6}], "end": 542.664375}, {"start": 542.664375, "segs": [{"t": "第八關，建造迴圈。教科書上的研究流程是一條直線：選題、文獻、方法、蒐集、分析、寫完。看起來很像生產線。", "start": 542.664, "dur": 12.955}, {"t": "實際上它是一個圈：想蓋什麼、找材料、蓋一部分、站遠一點看、修改、再蓋。然後，再來一圈。", "start": 556.069, "dur": 10.318}, {"t": "看我的時間線。2021 年 6 月做訪談。2023 年 5 到 6 月，口試、修改、畢業。中間隔了兩年。那兩年在做什麼？整理、分析、解釋、發表、修改、繼續寫。", "start": 566.837, "dur": 16.768}, {"t": "訪談做完，不等於論文做完。那只是材料運到工地而已，工人都還沒上班。", "start": 584.055, "dur": 7.317}, {"t": "所以不要問自己論文完成百分之幾，那個數字只會讓你難過。改問：我現在卡的是哪一種？題目、文獻、資料、分析、論證、寫作，還是缺人給回饋？", "start": 591.822, "dur": 15.46}], "end": 608.3819166666667}, {"start": 608.3819166666667, "segs": [{"t": "第九關，嚮導。第二個魔王級的焦慮：我要找哪一位老師當指導教授？這件事真的很重要。老師會影響你讀什麼、怎麼想問題、怎麼設計研究。", "start": 608.382, "dur": 13.744}, {"t": "但我想先幫大家把恐懼調低一格。因為不管跟誰，最後把論文寫完的人，還是你。老師不是代打，也不是幫你決定人生方向的人。", "start": 622.576, "dur": 12.142}, {"t": "所以我不太建議用「哪位老師最厲害」、「哪位老師畢業最快」來選。更好的問題是：我想寫的東西，跟哪一位老師比較聊得起來？", "start": 635.168, "dur": 12.221}, {"t": "這個看簡介看不出來，要真的去聊，有時候要聊很多次。而且老師第一次不一定會說好，這很正常。因為老師也在確認，你想做的，是不是他幫得上忙的。與其說是找最好的老師，不如說是在確認：我們有沒有辦法一起把這件事做完。", "start": 647.839, "dur": 22.511}, {"t": "指導教授比較像一位經驗豐富、知道哪裡會塌的老玩家。他會說：這裡不要挖。這個材料撐不住。這個設計，做到最後會很麻煩。這些建議通常都很真實，請認真聽。", "start": 670.799, "dur": 16.264}, {"t": "但如果研究最後被調成一個你完全沒興趣、心裡過不去的東西，那幾年會非常辛苦。老師的專業很重要，你對研究的所有權也很重要。想蓋什麼，最後還是你決定。", "start": 687.514, "dur": 15.451}], "end": 704.064125}, {"start": 704.064125, "segs": [{"t": "第十關，多人模式。老師、同學、研討會，不是來幫你蓋房子的。他們是來參觀，然後指著某一根柱子問：這一根，為什麼放這裡？", "start": 704.064, "dur": 13.059}, {"t": "那一刻你會發現：嗯，我也不知道。", "start": 717.573, "dur": 3.363}, {"t": "我有兩個很明確的外部檢查點：2021 年 12 月的研討會發表，還有 2022 年 3 月的期中發表。期中發表是學系規定一定要過的關卡。兩個都在口試之前。回頭看，它們最大的意義，是逼我把研究說給別人聽，提早發現問題。", "start": 721.387, "dur": 22.392}, {"t": "Bug 越早抓到越便宜。地基的問題，蓋到三樓才發現，那就不叫修改，叫拆遷。", "start": 744.228, "dur": 7.732}], "end": 753.0605833333333}, {"start": 753.0605833333333, "segs": [{"t": "第十一關，隊友。講到研究資源，我們會先想到資料庫、圖書館、經費、軟體。都很重要。但回頭看，研究所裡最珍貴的資源，是坐在你旁邊的同學。而且這是限時資源：到了三年級，沒有修課以後，很多時候就碰不到了。", "start": 753.061, "dur": 22.568}, {"t": "就算研究的東西不一樣，跟同學聊天還是很有用。因為要把自己的研究講給一個外行人聽，你就得回答：我到底在研究什麼？為什麼重要？這篇文獻到底在講什麼？同學聽得懂，通常代表你自己也開始懂了。", "start": 776.078, "dur": 19.2}, {"t": "我以前辦過讀書會。我知道不是每個人都有時間跟精力，所以不是說一定要組。但至少，不要把研究玩成單機遊戲。偶爾一起吃飯、聊天、抱怨研究，都算。因為研究也是一段很長的心理歷程，有人一起走，真的差很多。", "start": 795.728, "dur": 21.463}, {"t": "另外，地圖是會更新的。隨時留意新的工具、新的研究，有機會就多去研討會走走。就算不發表，去看別人怎麼蓋，也會得到很多靈感。", "start": 817.641, "dur": 13.196}], "end": 831.9372916666666}, {"start": 831.9372916666666, "segs": [{"t": "第十二關，工具。現在做研究，多少都會碰到 AI。找資料、整理概念、幫忙閱讀、修語言、寫程式、分析資料，能用的地方很多。我不覺得需要假裝它不存在。", "start": 831.937, "dur": 16.38}, {"t": "重點是：活用它，但知道哪些事還是你要負責。尤其是個人資料、研究資料、引用、著作權、研究倫理，還有 AI 生成內容要不要揭露。", "start": 848.767, "dur": 13.745}, {"t": "這些規定會一直變。所以與其背一張「AI 可以做什麼、不可以做什麼」的表，不如養成習慣：動手之前，先查自己學校跟領域的規範。", "start": 862.962, "dur": 12.897}, {"t": "AI 可以是一把很好的鑽石鎬。但是最後掛在論文上的名字，不是 AI 的名字。是你的名字。", "start": 876.309, "dur": 8.265}], "end": 885.6738333333333}, {"start": 885.6738333333333, "segs": [{"t": "第十三關，基地管理。到這裡，我們都在講論文那棟房子怎麼蓋。但是把鏡頭拉遠，你的地圖上，不可能只有這一棟。", "start": 885.674, "dur": 11.004}, {"t": "工作、金錢、健康、朋友、興趣、未來，全部都在同一張地圖上。它們不是敵人，也不是負面狀態。打工會花時間，但也產出金錢跟經驗。跟朋友吃飯會花時間，但也在幫你回血。", "start": 897.128, "dur": 18.518}, {"t": "如果所有不是論文的事都叫干擾，那睡覺也是干擾。照這樣算，最理想的研究生，應該是一台伺服器。", "start": 916.096, "dur": 9.714}, {"t": "我的歷程從 2019 年跨到 2023 年。但那幾年，我並不是每天都在做研究。跟大家一樣，我也要打工、要生活，還要玩。對，要玩。找到自己壓力的出口，是很正經的基地建設。", "start": 926.26, "dur": 18.166}, {"t": "所以請先不要排論文。先把每週的固定成本列出來：睡覺、上課、工作、通勤、家裡的事、吃飯。扣掉以後剩下的，才是研究真正能用的。研究計畫要照著人生排，不是把人生塞進論文剩下的縫裡。", "start": 944.876, "dur": 20.057}], "end": 966.033375}, {"start": 966.033375, "segs": [{"t": "第十四關，規模。玩家狀態：每週可以做研究，15 小時。藍圖 A，每週需要 12 小時，可以。藍圖 B，每週需要 47 小時。嗯。", "start": 966.033, "dur": 13.872}, {"t": "這時候我們最常用的解法是：我再努力一點。可是如果一個人每週要工作二十小時，正確答案不應該永遠是少睡二十小時。", "start": 980.355, "dur": 11.876}, {"t": "你其實有三個按鈕：縮小範圍、延長時間、增加資源或找人幫忙。研究設計本身，是可以調的。", "start": 992.681, "dur": 9.841}, {"t": "我自己學到的是：拿到資料跟寫完論文中間，還有分析、寫作、回饋、修改。估工程不能只算蒐集資料要多久。如果重新規劃，我會把後半段的成本，老老實實算進去。", "start": 1002.973, "dur": 17.005}, {"t": "縮小規模不是失敗。蓋一間真的住得進去的小木屋，比在腦中蓋一座永遠不會完工的城堡，厲害多了。", "start": 1020.427, "dur": 9.388}], "end": 1030.9149166666666}, {"start": 1030.9149166666666, "segs": [{"t": "第十五關，速度。兩年一定要畢業嗎？同學都開始收資料了，我是不是太慢？別人都投稿了，我怎麼還在看文獻？這種比較，幾乎一定會出現。", "start": 1030.915, "dur": 13.628}, {"t": "但每個人的條件差太多了。有人可以全心寫論文，有人要工作，有人有家庭，有人想實習，有人就是希望這幾年除了論文，還能做很多別的事。所以我不覺得兩年畢業就是成功，也不覺得念五、六年就是失敗。", "start": 1044.993, "dur": 20.106}, {"t": "更重要的是：你知不知道自己的資源花到哪裡去了。這個世界裡真正有限的不是錢，是時間、注意力、體力，還有情緒。", "start": 1065.549, "dur": 11.325}, {"t": "所以不要問：別人現在蓋到幾樓？改問：以我現在手上的資源，下一步要蓋什麼？你可以走得快，也可以走得慢，但最好知道自己為什麼這樣走。", "start": 1077.325, "dur": 13.742}], "end": 1092.16625}, {"start": 1092.16625, "segs": [{"t": "第十六關，我的存檔。把整條時間線攤開來看。", "start": 1092.166, "dur": 4.642}, {"t": "2019 年 9 月，在教學現場開始注意到問題。2020 年 9 月，進碩班，把現場的關心慢慢轉成研究。2021 年 6 月，訪談，拿到能回答問題的材料。2021 年 12 月，研討會，把蓋到一半的房子拿給別人看。2022 年 3 月，期中發表，再檢查一次結構。2023 年 5 到 6 月，口試、修改、畢業。", "start": 1097.258, "dur": 31.019}, {"t": "請注意每個日期下面寫的，不是我完成了什麼，而是我當時在處理哪一種問題。", "start": 1128.728, "dur": 7.091}, {"t": "這是我的存檔，不是攻略本。你不用照我的年份走。還有，如果你一直拿某個人的時間線來壓自己，先看一下：他的出生點，跟你一樣嗎？", "start": 1136.268, "dur": 12.793}], "end": 1150.1612083333334}, {"start": 1150.1612083333334, "segs": [{"t": "最後一關。回到一開始的問題：沙盒遊戲，怎樣才叫玩得好？", "start": 1150.161, "dur": 6.056}, {"t": "我覺得不是最快打完，也不是把所有能力值點滿。而是你知道自己想做什麼，知道自己手上有什麼，最後蓋出一個你認得出來的東西，並且能夠很有自信地說：這是我的存檔。", "start": 1156.667, "dur": 15.785}, {"t": "我的存檔留下了一篇完成的研究，也留下教學現場的經驗、研究跟發表的歷程，還有對自己研究方式的理解。但那是我的結果，不是你的勝利條件。", "start": 1172.903, "dur": 13.614}, {"t": "還有一件事。論文最後真的會出版，會進學校的系統。以後有人搜尋你的名字，可能就會看到它。它不用改變世界，但請好好把它收尾。做到幾年後重新打開的時候，你可以說：嗯，那時候的我，真的很認真把這件事做完了。", "start": 1186.967, "dur": 22.038}, {"t": "論文是很重要的一棟建築，但它不是整張地圖。有人想兩年跑完主線，有人想蓋一座漂亮的城，有人會繞很多路。都可以。", "start": 1209.455, "dur": 11.792}, {"t": "而如果要說這張地圖上最值得珍惜的資源，我還是會說：是現在坐在你旁邊的這些人。論文總有一天會寫完。但能一起討論、一起困惑、一起抱怨的這段時間，不一定還會再有。", "start": 1221.697, "dur": 17.366}, {"t": "地圖很大，資源有限。這個存檔，你想留下什麼？", "start": 1239.513, "dur": 4.723}, {"t": "謝謝大家。", "start": 1246.436, "dur": 1.018}], "end": 1248.5542083333332}, {"start": 1248.5542083333332, "segs": [{"t": "最後這張玩家檢查表，歡迎拍照帶走。它不是評分表，是用來把「我現在很卡」，拆成可以判斷的問題。", "start": 1248.554, "dur": 10.108}], "end": 1259.7622916666667}]};
+const D={"total": 1267.762, "scenes": [{"start": 1.0, "segs": [{"t": "大家好，歡迎來到 Mastercraft，碩士世界。先問大家一個問題：如果碩士班是一款遊戲，怎樣才算玩得好？", "start": 1.0, "dur": 10.865}, {"t": "最快畢業？論文最厚？發表最多？嗯，聽起來都像成就，但是，都不一定。", "start": 12.315, "dur": 7.635}, {"t": "我後來覺得，碩士班就像一個沙盒遊戲。系統有規則、有期限，還有一棟離開前一定要蓋完的大型建築，叫做論文。但除此之外，你要往哪裡走、想蓋什麼、要留多少資源給工作跟生活，沒有標準答案。", "start": 20.4, "dur": 19.942}, {"t": "所以今天帶大家來看看我的存檔：我當時有什麼資源、遇到什麼問題、怎麼做選擇。希望讓你的存檔，可以玩得更開心。", "start": 40.792, "dur": 22.995}], "end": 64.88645833333334}, {"start": 64.88645833333334, "segs": [{"t": "第一關，出生點。玩過的人都知道，有人一出生，旁邊就是村莊。有人一出生，在海中央的小島，島上只有一棵樹。同樣叫做第一天，心情完全不一樣。", "start": 64.886, "dur": 15.37}, {"t": "碩一也是。有人已經有研究經驗，有人要打工，有人有家庭責任。時間、金錢、精力、支持系統，每個人的初始能力分配都不一樣。", "start": 80.706, "dur": 12.756}, {"t": "我的存檔是這樣：2019 年 9 月，我就已經在跟研究相關的場域教課了。2020 年 9 月，才進碩士班。也就是說，我進場之前，那一塊地圖就已經開過了。", "start": 93.912, "dur": 15.263}, {"t": "還有一個重要的免責聲明：我的存檔，是教育類的實踐研究。也就是在教學現場做課程，再去研究它。如果你做的是別的領域、別的方法，地形會不一樣。我講的是個人案例，僅作參考。", "start": 109.625, "dur": 19.6}, {"t": "所以如果我某個階段比同學早做完，不一定是我比較有效率，可能只是我偷跑了一年。這一關的判斷工具：了解自己，不要盲目比較。先定義自己的勝利條件，再談效率。不然後面談效率，只是在比誰跑得快，卻沒有人知道終點在哪裡。", "start": 129.675, "dur": 12.894}], "end": 143.66866666666667}, {"start": 143.66866666666667, "segs": [{"t": "第二關，世界規則。沙盒不是無限自由。學分、研究倫理、論文、口試、修業期限，這些是硬規則，系統寫死的，沒得商量。", "start": 143.669, "dur": 13.268}, {"t": "但是規則以外，怎麼配置這幾年，是你的。我最後要過的關，同樣是論文跟口試。可是從教學現場、訪談、研討會、期中發表到畢業，這條路，得要自己往前推進。", "start": 157.387, "dur": 16.913}, {"t": "很多焦慮，其實來自把別人的玩法，誤認成系統規定。一定要發幾篇、一定要幾年畢業、一定要用哪個方法。先查一下：這是規則書寫的，還是學長姐的傳說？判斷工具：把硬規則，跟別人的攻略分開。", "start": 174.75, "dur": 19.623}], "end": 195.473625}, {"start": 195.473625, "segs": [{"t": "第三關，探索。地圖這麼大，我到底要在哪裡蓋？", "start": 195.474, "dur": 4.747}, {"t": "很多人以為，研究是從一個漂亮的題目開始的。我的不是。大學修教育學程的時候，我進過國中、高中教日語。當時吸引我的，不是哪個理論的名字，而是一個很樸素的困惑：如果換一種課程設計，能不能改善現場的問題？", "start": 200.67, "dur": 20.924}, {"t": "進了碩班以後，才靠著讀先行研究、跟人討論，在現場跟文獻之間來回走，慢慢把這個困惑，磨成一個可以研究的問題。注意，是來回走，不是一條直線。", "start": 222.044, "dur": 15.322}, {"t": "所以如果你現在還沒有題目，先別慌。先找到那個你願意停下來，多看幾眼的地方，題目就在那邊。", "start": 237.816, "dur": 10.27}], "end": 249.186}, {"start": 249.186, "segs": [{"t": "第四關，命名牌。剛進研究所，第一個焦慮通常是：我的論文題目，到底要寫什麼？回頭看，我會給一個有點吊詭的答案：論文題目，沒有你想像中那麼重要。", "start": 249.186, "dur": 15.428}, {"t": "不是研究主題不重要。而是最後印在封面上的那一行字，通常不是你一開始就能決定的。就像沒有人是先把招牌做好，才開始蓋房子的。", "start": 265.064, "dur": 12.845}, {"t": "研究本來就是從寬到窄。一開始你可能只知道：我對某個現象很好奇。我想研究某一群人。我覺得某件事好像有問題。最近讀到一個概念，很有意思。這樣，就夠你出發了。", "start": 278.359, "dur": 16.622}, {"t": "一開始真正重要的，是你能不能把「我到底想知道什麼」，講給另一個人聽，而且他聽得懂。能說到這個程度，你就有東西可以拿去找老師了。", "start": 295.431, "dur": 12.697}, {"t": "接下來讀文獻、跟老師談、試方法，你才會慢慢發現：這個問題太大。這個資料拿不到。這個題目，先行研究已經有人做過了。真正有趣的，是旁邊那一小塊。甚至，我以為我要問 A，結果我真正想知道的是 B。", "start": 308.578, "dur": 16.843}, {"t": "所以題目不是起點。它比較像是研究收斂之後，替你現在的位置貼上的一張標籤。你不用先把整張地圖畫完，只要知道：我現在想往哪個方向走。這樣就夠了。", "start": 325.871, "dur": 15.17}], "end": 342.1405}, {"start": 342.1405, "segs": [{"t": "第五關，戰爭迷霧。這一關有一種很常見的玩家：地圖探索，百分之八十七。建築進度，百分之三。", "start": 342.14, "dur": 9.983}, {"t": "他每天都很忙，忙著開地圖。再讀一篇，再讀一篇就可以開始了。聽起來很用功。但有時候，再讀一篇，只是比較安心。", "start": 352.573, "dur": 12.112}, {"t": "我自己回頭看，題目還不清楚的時候，真正有幫助的，不是等一切整理好，而是帶著目前的理解跟困惑，直接去找人討論。如果要先把日語教育全部讀完才開始，那我現在應該還在讀。", "start": 365.135, "dur": 17.724}, {"t": "所以讀下一篇之前，先問自己：我讀它的目標是什麼？手上的文獻，真的不夠我啟動嗎？能不能開始，取決於你對研究的清晰度，還有對重要相關文獻的理解。你下一步需要的，是更多地圖，還是一個選擇？每一輪探索，都先知道自己讀的目標。", "start": 383.31, "dur": 13.823}], "end": 398.232375}, {"start": 398.232375, "segs": [{"t": "第六關，前人的建築。來，打開文獻軟體。PDF，327 個。恭喜，你是一位優秀的觀光客。", "start": 398.232, "dur": 10.401}, {"t": "先行研究不是你背包裡的材料。它是別人已經蓋好的房子。存了 327 篇，意思是你參觀了 327 棟，還拍了照。但是拍照，不等於你會蓋。", "start": 409.083, "dur": 13.998}, {"t": "參觀要看三件事：這棟房子為什麼被蓋出來、又是怎麼蓋的，也就是研究的背景、目的跟問題，還有對象、方法、資料，最後得到什麼結論。我怎麼看它，而且要寫下來：哪一根柱子、哪面牆、哪個設計，值得我借鑑。還有，我的房子要蓋在它旁邊的哪裡：是接著蓋、補一塊，還是蓋在它沒蓋到的地方。如果重新整理一次，我會更刻意把作者的說法，跟它和我的研究的關聯，分開記，而且留下頁碼，隨時回得去原文。", "start": 423.531, "dur": 26.641}, {"t": "那材料是什麼？是你為了這個研究，親手蒐集的資料，加上你自己的考察。別人的房子再漂亮，也不能拆來當你的牆。", "start": 450.622, "dur": 10.782}, {"t": "所以寫作的時候，需要的不是「我記得這篇很重要」，而是「我知道它為什麼現在要出現在這裡」。判斷工具：先行研究是鄰居，不是你的建材。看懂別人蓋到哪裡，才知道自己要從哪裡接著蓋。", "start": 461.854, "dur": 18.072}], "end": 481.0257916666667}, {"start": 481.0257916666667, "segs": [{"t": "第七關，藍圖。找到想蓋的位置以後，下一個問題不是材料越多越好，而是：我要蓋的東西，到底需要什麼？", "start": 481.026, "dur": 10.563}, {"t": "我原本的關心是，換一種課程設計，能不能改善現場的問題。但是「改善」這兩個字太大了。我要看的是學生的感受？經驗？行為？表現？還是某種變化？問題不一樣，要的材料就不一樣。", "start": 492.039, "dur": 18.897}, {"t": "想知道學生怎麼看這門課，滿意度跟訪談可以回答。想說能力有沒有變化，就需要跟能力目標對得上的表現資料。", "start": 511.386, "dur": 10.875}, {"t": "不能因為背包裡只有玻璃，就決定整棟房子用玻璃蓋。也不能拿「學生說很好」，去證明能力一定提升。", "start": 522.711, "dur": 9.804}, {"t": "請填空：我想知道什麼，所以我至少需要看到什麼。蒐集的資料要呼應研究目的，否則蓋不出符合藍圖的建築。", "start": 532.964, "dur": 8.6}], "end": 542.664375}, {"start": 542.664375, "segs": [{"t": "第八關，建造迴圈。教科書上的研究流程是一條直線：選題、文獻、方法、蒐集、分析、寫完。看起來很像生產線。但在成為熟練的研究者之前，我們沒辦法總是一步到位。", "start": 542.664, "dur": 12.955}, {"t": "實際上它是一個圈：想蓋什麼、找材料、蓋一部分、站遠一點看、修改、再蓋。然後，再來一圈。", "start": 556.069, "dur": 10.318}, {"t": "看我的時間線。2021 年 6 月做訪談。2023 年 5 到 6 月，口試、修改、畢業。中間隔了兩年。那兩年在做什麼？整理、分析、解釋、發表、修改、繼續寫。", "start": 566.837, "dur": 16.768}, {"t": "資料蒐集完，不等於論文做完。那只是材料運到工地而已，工人都還沒上班。", "start": 584.055, "dur": 7.317}, {"t": "所以不要問自己論文完成百分之幾，那個數字只會讓你難過。改問：我現在卡的是哪一種？方向、文獻、資料、分析、論證、寫作，還是缺人給回饋？", "start": 591.822, "dur": 15.46}], "end": 608.3819166666667}, {"start": 608.3819166666667, "segs": [{"t": "第九關，嚮導。第二個魔王級的焦慮：我要找哪一位老師當指導教授？這件事真的很重要。老師會影響你讀什麼、怎麼想問題、怎麼設計研究。", "start": 608.382, "dur": 13.744}, {"t": "但我想先幫大家把恐懼調低一格。因為不管跟誰，最後把論文寫完的人，還是你。老師不是代打，也不是幫你決定人生方向的人。", "start": 622.576, "dur": 12.142}, {"t": "所以我不太建議用「哪位老師最厲害」、「哪位老師畢業最快」來選。更好的問題是：我想寫的東西，跟哪一位老師比較聊得起來？", "start": 635.168, "dur": 12.221}, {"t": "這個看簡介看不出來，要真的去聊，有時候要聊很多次。而且老師第一次不一定會說好，這很正常。因為老師也在確認，你想做的，是不是他幫得上忙的。與其說是找最好的老師，不如說是在確認：我們有沒有辦法一起把這件事做完。", "start": 647.839, "dur": 22.511}, {"t": "指導教授比較像一位經驗豐富、知道哪裡會塌的老玩家。他會說：這裡不要挖。這個材料撐不住。這個設計，做到最後會很麻煩。這些建議都很真實，請認真聽。", "start": 670.799, "dur": 16.264}, {"t": "但如果研究最後被調成一個你完全沒興趣、心裡過不去的東西，那幾年會非常辛苦。老師的專業很重要，你對研究的所有權也很重要。想蓋什麼，最後還是你決定。", "start": 687.514, "dur": 15.451}], "end": 704.064125}, {"start": 704.064125, "segs": [{"t": "第十關，多人模式。老師、同學、研討會，不是來幫你蓋房子的。他們是來參觀，然後指著某一根柱子問：這一根，為什麼放這裡？", "start": 704.064, "dur": 13.059}, {"t": "那一刻你會發現：嗯，我也不知道。", "start": 717.573, "dur": 3.363}, {"t": "我有兩個很明確的外部檢查點：2021 年 12 月的研討會發表，還有 2022 年 3 月的期中發表。期中發表是依學系規定進行的。兩個都在口試之前。回頭看，它們最大的意義，是逼我把研究說給別人聽，提早發現問題。", "start": 721.387, "dur": 22.392}, {"t": "Bug 越早抓到越便宜。地基的問題，蓋到三樓才發現，那就不叫修改，叫拆遷。", "start": 744.228, "dur": 7.732}], "end": 753.0605833333333}, {"start": 753.0605833333333, "segs": [{"t": "第十一關，隊友。講到研究資源，我們會先想到資料庫、圖書館、經費、軟體。都很重要。但回頭看，研究所裡最珍貴的資源，是坐在你旁邊的同學。而且這是限時資源：到了三年級，沒有修課以後，很多時候就碰不到了。", "start": 753.061, "dur": 22.568}, {"t": "就算研究的東西不一樣，跟同學聊天還是很有用。因為要把自己的研究講給一個外行人聽，你就得回答：我到底在研究什麼？為什麼重要？這篇文獻到底在講什麼？同學聽得懂，通常代表你自己也開始懂了。", "start": 776.078, "dur": 19.2}, {"t": "我以前辦過讀書會。我知道不是每個人都有時間跟精力，所以不是說一定要組。但至少，不要把研究玩成單機遊戲。偶爾一起吃飯、聊天、抱怨研究，都算。因為研究也是一段很長的心理歷程，有人一起走，真的差很多。", "start": 795.728, "dur": 21.463}, {"t": "另外，地圖是會更新的。隨時留意新的工具、新的研究，有機會就多去研討會走走。就算不發表，去看別人怎麼蓋，也會得到很多靈感。", "start": 817.641, "dur": 13.196}], "end": 831.9372916666666}, {"start": 831.9372916666666, "segs": [{"t": "第十二關，工具。現在做研究，多少都會碰到 AI。找資料、整理概念、幫忙閱讀、修語言、寫程式、分析資料，能用的地方很多。我不覺得需要假裝它不存在。", "start": 831.937, "dur": 16.38}, {"t": "重點是：活用它，但知道哪些事還是你要負責。尤其是個人資料、研究資料、引用、著作權、研究倫理，還有 AI 生成內容要不要揭露。", "start": 848.767, "dur": 13.745}, {"t": "這些規定會一直變。所以與其背一張「AI 可以做什麼、不可以做什麼」的表，不如養成習慣：動手之前，先查自己學校跟領域的規範。", "start": 862.962, "dur": 12.897}, {"t": "AI 可以是一把很好的鑽石鎬。但是最後掛在論文上的名字，不是 AI 的名字。是你的名字。", "start": 876.309, "dur": 8.265}], "end": 885.6738333333333}, {"start": 885.6738333333333, "segs": [{"t": "第十三關，基地管理。到這裡，我們都在講論文那棟房子怎麼蓋。但是把鏡頭拉遠，你的地圖上，不可能只有這一棟。", "start": 885.674, "dur": 11.004}, {"t": "工作、金錢、健康、朋友、興趣、未來，全部都在同一張地圖上。它們不是敵人，也不是負面狀態。打工會花時間，但也產出金錢跟經驗。跟朋友吃飯會花時間，但也在幫你回血。", "start": 897.128, "dur": 18.518}, {"t": "如果所有不是論文的事都叫干擾，那睡覺也是干擾。照這樣算，最理想的研究生，應該是一台伺服器。", "start": 916.096, "dur": 9.714}, {"t": "我的歷程從 2019 年跨到 2023 年。但那幾年，我並不是每天都在做研究。跟大家一樣，我也要打工、要生活，還要玩。對，要玩。找到自己壓力的出口，是很正經的基地建設。", "start": 926.26, "dur": 18.166}, {"t": "所以請先不要排論文。先把每週的固定成本列出來：睡覺、上課、工作、通勤、家裡的事、吃飯。扣掉以後剩下的，才是研究真正能用的。研究計畫要照著人生排，不是把人生塞進論文剩下的縫裡。", "start": 944.876, "dur": 20.057}], "end": 966.033375}, {"start": 966.033375, "segs": [{"t": "第十四關，規模。玩家狀態：每週可以做研究，15 小時。藍圖 A，每週需要 12 小時，可以。藍圖 B，每週需要 47 小時。嗯。", "start": 966.033, "dur": 13.872}, {"t": "這時候我們最常用的解法是：我再努力一點。可是如果一個人每週要工作二十小時，正確答案不應該永遠是少睡二十小時。", "start": 980.355, "dur": 11.876}, {"t": "你其實有三個按鈕：縮小範圍、延長時間、增加資源或找人幫忙。基於你的人生條件，做最合理的研究設計。", "start": 992.681, "dur": 9.841}, {"t": "我自己學到的是：拿到資料跟寫完論文中間，還有分析、寫作、回饋、修改。估工程不能只算蒐集資料要多久。如果重新規劃，我會把後半段的成本，老老實實算進去。", "start": 1002.973, "dur": 17.005}, {"t": "縮小規模不是失敗。蓋一間真的住得進去的小木屋，比在腦中蓋一座永遠不會完工的城堡，厲害多了。", "start": 1020.427, "dur": 9.388}], "end": 1030.9149166666666}, {"start": 1030.9149166666666, "segs": [{"t": "第十五關，速度。兩年一定要畢業嗎？同學都開始收資料了，我是不是太慢？別人都投稿了，我怎麼還在看文獻？這種比較，幾乎一定會出現。", "start": 1030.915, "dur": 13.628}, {"t": "但每個人的條件差太多了。有人可以全心寫論文，有人要工作，有人有家庭，有人想實習，有人就是希望這幾年除了論文，還能做很多別的事。所以我不覺得兩年畢業就是成功，也不覺得念五、六年就是失敗。", "start": 1044.993, "dur": 20.106}, {"t": "更重要的是：你知不知道自己的資源花到哪裡去了。這個世界裡真正有限的不只是錢，還有時間、注意力、體力，跟情緒。", "start": 1065.549, "dur": 11.325}, {"t": "所以不要問：別人現在蓋到幾樓？改問：以我現在手上的資源，下一步要蓋什麼？你可以走得快，也可以走得慢，但最好知道自己為什麼這樣走。", "start": 1077.325, "dur": 13.742}], "end": 1092.16625}, {"start": 1092.16625, "segs": [{"t": "第十六關，我的存檔。把整條時間線攤開來看。", "start": 1092.166, "dur": 4.642}, {"t": "2019 年 9 月，在教學現場開始注意到問題。2020 年 9 月，進碩班，把現場的關心慢慢轉成研究。2021 年 6 月，訪談，拿到能回答問題的材料。2021 年 12 月，研討會，把蓋到一半的房子拿給別人看。2022 年 3 月，期中發表，再檢查一次結構。2023 年 5 到 6 月，口試、修改、畢業。", "start": 1097.258, "dur": 31.019}, {"t": "這是我的存檔。回頭看，每個階段我都給自己一個明確的、當下的目標。", "start": 1128.728, "dur": 7.091}, {"t": "你不用照我的年份走，但請給自己一個明確的當下目標。因為在碩士班，沒有人會逼你，也不會自動就畢業。", "start": 1136.268, "dur": 12.793}], "end": 1150.1612083333334}, {"start": 1150.1612083333334, "segs": [{"t": "最後一關。回到一開始的問題：沙盒遊戲，怎樣才叫玩得好？", "start": 1150.161, "dur": 6.056}, {"t": "我覺得不是最快打完，也不是把所有能力值點滿。而是你知道自己想做什麼，知道自己手上有什麼，最後蓋出一個你認得出來的東西，並且能夠很有自信地說：這是我的存檔。", "start": 1156.667, "dur": 15.785}, {"t": "我的存檔留下了一篇完成的研究，也留下教學現場的經驗、研究跟發表的歷程，還有對自己研究方式的理解。但那是我的結果，不是你的勝利條件。", "start": 1172.903, "dur": 13.614}, {"t": "還有一件事。論文最後真的會出版，會進學校的系統。以後有人搜尋你的名字，可能就會看到它。它不用改變世界，但請好好把它收尾。做到幾年後重新打開的時候，你可以說：嗯，那時候的我，真的很認真把這件事做完了。", "start": 1186.967, "dur": 22.038}, {"t": "論文是很重要的一棟建築，但它不是整張地圖。有人想兩年跑完主線，有人想蓋一座漂亮的城，有人會繞很多路。都可以。", "start": 1209.455, "dur": 11.792}, {"t": "而如果要說這張地圖上最值得珍惜的資源，我還是會說：是現在坐在你旁邊的這些人。論文總有一天會寫完。但能一起討論、一起困惑、一起抱怨的這段時間，不一定還會再有。", "start": 1221.697, "dur": 17.366}, {"t": "地圖很大，資源有限。這個存檔，你想留下什麼？", "start": 1239.513, "dur": 4.723}, {"t": "謝謝大家。", "start": 1246.436, "dur": 1.018}], "end": 1248.5542083333332}, {"start": 1248.5542083333332, "segs": [{"t": "最後這張玩家檢查表，歡迎拍照帶走。它是用來把「我現在很卡」，拆成可以動手的下一步。", "start": 1248.554, "dur": 10.108}], "end": 1259.7622916666667}]};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const Q=new URLSearchParams(location.search),REC=Q.has('rec'),MAN=Q.has('t');
 document.body.classList.add('rec');
 
 /* ---------- 像素圖 ---------- */
-const PAL={g:['#5fa03a','#6db344','#4f8f30','#77bf4d'],d:['#8a5a3a','#7a4e31','#96643f','#6e452b'],s:['#8d8d8d','#7c7c7c','#9a9a9a','#737373'],p:['#b98c52','#a97c45','#c4975c'],t:['#6b4a2b','#5c3f24','#775333'],l:['#3f8a2e','#357526','#4a9d36','#2c651f'],b:['#a04a3a','#8f4133','#b05544'],R:['#7a2f2a','#6a2622','#8a3830'],y:['#f2c94c','#e0b63a','#ffe07a'],w:['#ececec','#dedede','#f6f6f6'],a:['#3d7fd9','#4a8be3','#356fc4'],n:['#e3d59a','#d8c98a','#eadfaa']};
+const PAL={g:['#5fa03a','#6db344','#4f8f30','#77bf4d'],d:['#8a5a3a','#7a4e31','#96643f','#6e452b'],s:['#8d8d8d','#7c7c7c','#9a9a9a','#737373'],p:['#b98c52','#a97c45','#c4975c'],t:['#6b4a2b','#5c3f24','#775333'],l:['#3f8a2e','#357526','#4a9d36','#2c651f'],b:['#a04a3a','#8f4133','#b05544'],R:['#7a2f2a','#6a2622','#8a3830'],y:['#f2c94c','#e0b63a','#ffe07a'],w:['#ececec','#dedede','#f6f6f6'],a:['#3d7fd9','#4a8be3','#356fc4'],n:['#e3d59a','#d8c98a','#eadfaa'],h:['#6b2a2a','#5a2222','#7a3232','#4e1c1c'],v:['#ff7a1a','#ff9a2e','#e8540f','#ffc44d'],q:['#1b1326','#241a33','#15101d'],u:['#7b2fd0','#9a4cf0','#5e1fb0','#b06cff'],k:['#2a2630','#231f29','#34303b','#1c1921']};
 const hsh=(x,y,s)=>{let n=(x*374761393+y*668265263+s*982451653)>>>0;n=Math.imul(n^(n>>>13),1274126177)>>>0;return(n^(n>>>16))>>>0};
 const TC={};
 function tex(k){if(TC[k])return TC[k];const c=document.createElement('canvas');c.width=c.height=8;const x=c.getContext('2d');const sd=k.charCodeAt(0);
@@ -685,6 +759,7 @@ const BD={
  village:["..RR.....RR....",".RRRR...RRRR...","PPPPPP.bbbbbb.l","PWPDPP.bWbDbb.t","PPPDPP.bbbDbb.t","GGGGGGGGGGGGGGG"],
  island:["...lll...","..lllll..","...ltl...","....t....","aannnnnaa","aaannnaaa"],
  cave:["GGGGGGGGGGGGGG","ddddd..ddddddd","sssss..sssssss","sss........sss","ss..........os","sss......ossss","ssssssssssssss"],
+ portal:["qqqq","quuq","quuq","quuq","qqqq"],
  castle:["s.s.s.s.s","sssssssss","ss.sss.ss","sssssssss","sss...sss","sss...sss","sss...sss"]
 };
 function build(name,z,m){const rows=BD[name];const c=document.createElement('canvas');c.width=rows[0].length*8;c.height=rows.length*8;const x=c.getContext('2d');
@@ -699,9 +774,19 @@ const SP={
  book:["........",".NNNNNN.",".NYYYYN.",".NNNNNN.",".NNNNNN.",".NNNNNN.",".WWWWWW.",".NNNNNN."],
  pick:["..CCCCC..",".....CCC.",".....OCC.","....O..C.","...O...C.","..O......",".O.......","O........"],
  gem:["...CC...","..CcCC..",".CcCCCC.","CcCCCCCC","CCCCCCcC",".CCCCcC.","..CCcC..","...CC..."],
- server:["XXXXXX","XgKKKX","XXXXXX","XgKgKX","XXXXXX","XKgKKX","XXXXXX","XggKKX","XXXXXX"]
+ server:["XXXXXX","XgKKKX","XXXXXX","XgKgKX","XXXXXX","XKgKKX","XXXXXX","XggKKX","XXXXXX"],
+ bed:["........","........","WWWRRRRR","WWWRRRRR","PPPPPPPP","P......P","........","........"],
+ compass:["..XXXX..",".XLLLLX.","XLLRLLLX","XLLRRLLX","XLLLKLLX","XLLLKLLX",".XLLLLX.","..XXXX.."],
+ bprint:[".IIIIII.",".IWWWWI.",".IWIIWI.",".IWIIWI.",".IWWWWI.",".IIIIII.",".IWIWWI.",".IIIIII."],
+ rod:["......fF",".....fF.","....fF..","...fF...","..fF....",".fF.....","fF......","F......."],
+ emerald:["..XXXX..",".XMMMMX.","XMmmMMMX","XMmMMMMX","XMMMMmMX","XMMMmMMX",".XMMMMX.","..XXXX.."],
+ leg:[".....VV.","....VVVV","...VVVVV","...VVVV.","..vVV...",".vv.....","vv......",".v......"],
+ plank:["PPPPPPPP","PPPOPPPP","OOOOOOOO","PPPPPPOP","PPPPPPPP","OOOOOOOO","PPOPPPPP","PPPPPPPP"],
+ clock:["..YYYY..",".YWWWWY.","YWWKWWWY","YWWKWWWY","YWWKKKWY","YWWWWWWY",".YWWWWY.","..YYYY.."],
+ paper:[".AAAAA..",".AAAAAA.",".AKKKAA.",".AAAAAA.",".AKKKKA.",".AAAAAA.",".AKKAAA.",".AAAAAA."],
+ fire:["...F....","..FfF...","..FfFF..",".FFffF..",".FfffFF.","..FffF..","OOXOOXOO",".OOOOOO."]
 };
-const SC={X:'#1b1b1b',R:'#e23b3b',W:'#ffffff',G:'#5cb848',g:'#4aa238',K:'#111111',H:'#4a2f18',S:'#e0a878',E:'#3b5bd6',T:'#2d9c8f',B:'#3a48a8',P:'#a8742f',L:'#cfcfcf',N:'#7a4cc0',Y:'#f2c94c',C:'#4fe0e0',c:'#c9ffff',O:'#7a5230'};
+const SC={M:'#17c964',m:'#9dffc0',F:'#ff8a1e',f:'#ffd84a',V:'#c9743a',v:'#f3ead8',A:'#f1e6c0',I:'#2f66c8',X:'#1b1b1b',R:'#e23b3b',W:'#ffffff',G:'#5cb848',g:'#4aa238',K:'#111111',H:'#4a2f18',S:'#e0a878',E:'#3b5bd6',T:'#2d9c8f',B:'#3a48a8',P:'#a8742f',L:'#cfcfcf',N:'#7a4cc0',Y:'#f2c94c',C:'#4fe0e0',c:'#c9ffff',O:'#7a5230'};
 function sprite(name,z,c){const rows=SP[name];const cv=document.createElement('canvas');cv.width=rows[0].length;cv.height=rows.length;const x=cv.getContext('2d');
  rows.forEach((r,j)=>[...r].forEach((ch,i)=>{if(ch=='.')return;x.fillStyle=(ch=='T'&&c)?c:SC[ch];x.fillRect(i,j,1,1)}));
  cv.className='px';cv.style.width=cv.width*z+'px';cv.style.height=cv.height*z+'px';return cv}
@@ -710,7 +795,21 @@ $$('i[data-bd]').forEach(e=>e.replaceWith(build(e.dataset.bd,+e.dataset.z,e.data
 {BD._g=["G".repeat(54),...Array(7).fill("d".repeat(54))];$('#ground').append(build('_g',24));
  const dc=$('#deco');[[60,6,38],[130,5,55],[40,8,70],[200,4,47]].forEach(([y,w,s],i)=>{const c=document.createElement('div');c.className='cloud';c.style.cssText=`top:${y}px;width:${w*24}px;animation-duration:${s}s;animation-delay:${-i*13}s`;dc.append(c)});
  for(let i=0;i<40;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${hsh(i,1,3)%1280}px;top:${hsh(i,2,5)%420}px`;dc.append(s)}
- for(let i=0;i<10;i++)$('#hearts').append(sprite('heart',2));
+ for(let i=0;i<10;i++){$('#hearts').append(sprite('heart',2));$('#food').append(sprite('leg',2))}
+ /* 地獄：地面、岩漿滴落、材質變數 */
+ BD._n=Array.from({length:8},(_,j)=>Array.from({length:54},(_,i)=>j>1&&hsh(i,j,9)%11==0?'v':'h').join(''));const ng=build('_n',24);ng.classList.add('ng');$('#ground').append(ng);
+ for(let i=0;i<9;i++){const d=document.createElement('div');d.className='drip';d.style.cssText=`left:${40+hsh(i,3,8)%1200}px;animation-duration:${2.2+hsh(i,4,8)%20/10}s;animation-delay:${-(hsh(i,5,8)%30)/10}s`;dc.append(d)}
+ [['lava','v'],['stone','k'],['brick','b'],['leaf','l']].forEach(([n,k])=>document.documentElement.style.setProperty('--'+n,`url(${tex(k).toDataURL()})`));
+ /* 04 手持地圖：讀一篇揭開一塊 */
+ {const fm=$('#fmap'),cs=[];for(let j=0;j<14;j++)for(let i=0;i<14;i++){const v=Math.sin(i*.7+1)+Math.cos(j*.6)+((hsh(i,j,7)%100)/100-.5)*.9;
+   cs.push({i,j,col:v<-.7?'#3d7fd9':v<-.35?'#e3d59a':v<.9?'#6db344':'#3f8a2e',k:Math.hypot(i-3,j-9)+(hsh(i,j,11)%100)/40})}
+  [...cs].sort((a,b)=>a.k-b.k).forEach((c,n)=>{c.st=n<170?(.3+.6*n/170).toFixed(3):n<175?1.25:n<180?1.4:n<185?1.75:null});
+  cs.forEach(c=>{const d=document.createElement('i');d.className='mc fx';d.style.setProperty('--c',c.i==3&&c.j==9?'#a04a3a':c.col);if(c.st!=null)d.dataset.step=c.st;fm.append(d)})}
+ /* 07 蓋錯了：敲掉重放 */
+ {const w=$('#wall');for(let n=0;n<15;n++){const d=document.createElement('div');d.className='wc'+(n==8?' a':n==2?' b':n==3||n==4?' no':'');if(n==8||n==2)d.innerHTML='<i class="w"></i><i class="r"></i>';w.append(d)}}
+ /* 結尾：終界門 */
+ {const e=$('#endp');for(let n=0;n<25;n++){const i=n%5,j=n/5|0,d=document.createElement('div'),ring=i==0||i==4||j==0||j==4,corner=(i==0||i==4)&&(j==0||j==4);
+   d.className=corner?'':ring?'ef':'ec';if(ring&&!corner)d.innerHTML='<i class="eye'+(n==2?' last':'')+'"></i>';e.append(d)}}
  const inv=$('#inv');for(let i=0;i<18;i++){const s=document.createElement('div');s.className='slot';s.append(sprite('pdf',5));s.insertAdjacentHTML('beforeend',i<5?'<b>64</b>':i==5?'<b>7</b>':'');if(i>5)s.innerHTML='';inv.append(s)}
 }
 
@@ -719,20 +818,38 @@ const scs=$$('.sc');const au=$('#au');scs.forEach((x,i)=>x.dataset.no=String(i).
 const els=scs.map(s=>[...s.querySelectorAll('[data-step]')].map(e=>({e,a:+e.dataset.step,b:e.dataset.until?+e.dataset.until:1e9,on:null})));
 D.scenes.forEach(s=>s.segs.forEach(g=>{const parts=g.t.match(/[^。？！]+[。？！」]*/g)||[g.t];let acc=0;const tot=g.t.length;g.caps=parts.map(p=>{const o={t:p.trim(),from:acc/tot};acc+=p.length;return o})}));
 let curS=-1,cc=false,SI=0,GI=0,T0=performance.now(),INST=false;
+/* 快捷欄：ITEMS[關]=[第幾格, 物品圖]，該關成就跳出時取得；最後一頁九格對應檢查表 */
+const LAST=scs.length-1,ITEMS={1:[0,'bed'],3:[1,'compass'],7:[2,'bprint'],6:[3,'book'],8:[4,'rod'],9:[5,'emerald'],13:[6,'leg'],14:[7,'plank'],15:[8,'clock']};
+const HS=[],TIC={gem:sprite('gem',6)};for(let i=0;i<9;i++){const s=document.createElement('div');s.className='hs';$('#hot').append(s);HS.push(s)}
+Object.entries(ITEMS).forEach(([k,[i,sp]])=>{HS[i].dataset.sc=k;HS[i].append(sprite(sp,5));TIC[sp]=sprite(sp,6)});
+const HE=[...$('#hearts').children],HF=[...$('#food').children];
+/* 愛心與飢餓值：10 BASE 列固定成本時飢餓值被扣；11 SCOPE「少睡」扣血，調整工程後回復 */
+function stat(si,p){let h=10,f=10;
+ if(si==13&&p>=4)f=10-[4.2,4.25,4.3,4.34,4.38,4.42,4.46,4.5].filter(x=>p>=x).length;
+ else if(si==14){if(p<1.45)f=2;else if(p<2){h=6;f=2}else if(p<4)f=6}
+ return[h,f]}
 const clock=()=>{const g=D.scenes[SI].segs[GI];const d=Math.min(2.6,g.dur);const f=INST?.985:Math.min(.985,(performance.now()-T0)/1000/d);return g.start+g.dur*f};
 function locate(t){let si=0;for(let i=0;i<D.scenes.length;i++)if(t>=D.scenes[i].start-.55)si=i;const sc=D.scenes[si];let gi=0;for(let j=0;j<sc.segs.length;j++)if(t>=sc.segs[j].start)gi=j;const g=sc.segs[gi];
  const f=Math.max(0,Math.min(.999,(t-g.start)/g.dur));return{si,gi,f,p:gi+f,g,speaking:t>=g.start&&t<=g.start+g.dur+.3}}
 function render(){const t=clock();const L=locate(t);
  if(L.si!==curS){curS=L.si;scs.forEach((s,i)=>s.classList.toggle('act',i==curS));const s=scs[curS];$('#stage').dataset.bg=s.dataset.bg;
   $('#hd').style.opacity=s.classList.contains('nohd')?0:1;$('#hd .no').textContent=s.dataset.no;$('#hd .en').textContent=s.dataset.en;$('#hd .zh').textContent=s.dataset.zh;
-  $('#toast .b').textContent=s.dataset.tool;$('#lvn').textContent='LV '+s.dataset.no;
-  const pr=curS/(scs.length-1);$('#hero').style.left=(50+pr*1030)+'px';$('#creep').style.left=(-90+pr*1010)+'px';
-  $('#tlwrap').classList.remove('hl');$$('.actor').forEach(a=>a.style.opacity=curS==scs.length-1?0:1)}
+  $('#toast .b').textContent=s.dataset.tool;$('#lvn').textContent='LV '+s.dataset.no;$('#tic').replaceChildren(TIC[(ITEMS[curS]||[0,'gem'])[1]]);
+  const pr=curS/LAST;$('#creep').style.left=(-90+pr*1010)+'px';
+  $('#tlwrap').classList.remove('hl');['#goal','#creep'].forEach(a=>$(a).style.opacity=curS==LAST?0:1)}
+ /* 07 卡關段進地獄；太陽隨全場進度移動；最後一頁營火 */
+ {const neth=curS==8&&L.p>=4,bg=neth?'nether':scs[curS].dataset.bg,st=$('#stage');if(st.dataset.bg!==bg)st.dataset.bg=bg;
+  const hl=(50+curS/LAST*1030+(neth?64:0))+'px',he=$('#hero');if(he.style.left!==hl)he.style.left=hl;
+  $('#portal').classList.toggle('on',curS==8&&L.p>=3.5);$('#fire').classList.toggle('on',curS==LAST);
+  const pg=(STEP_NO()-1)/(STEP_ALL-1),sun=$('#sun');sun.style.left=(70+pg*1090)+'px';sun.style.top=(36+(1-Math.sin(Math.PI*pg))*150)+'px';sun.style.visibility=curS==LAST?'hidden':'';
+  const[h,f]=stat(curS,L.p);HE.forEach((e,i)=>e.classList.toggle('emp',i>=h));HF.forEach((e,i)=>e.classList.toggle('emp',i<10-f))}
  els[curS].forEach(o=>{const on=L.p>=o.a&&L.p<o.b;if(on!==o.on){o.on=on;o.e.classList.toggle('on',on);if(o.e.style.visibility)o.e.style.visibility=on?'visible':'hidden'}});
- if(scs[curS].dataset.en=='MY SAVE FILE')$('#tlwrap').classList.toggle('hl',L.p>=2&&L.p<3);
+ if(scs[curS].dataset.en=='MY SAVE FILE')$('#tlwrap').classList.toggle('hl',false);
  
  const sc=D.scenes[curS],last=sc.segs.length-1,tool=scs[curS].dataset.tool;
  $('#toast').classList.toggle('on',!!tool&&L.gi==last&&L.f>.5&&t<sc.end-.1);
+ {const done=L.gi==last&&L.f>.5;let sel=-1,mx=-1;HS.forEach((h,i)=>{const k=+h.dataset.sc,got=(curS>k||(curS==k&&done))&&curS<LAST&&!(i==4&&curS==17&&L.p>=7);h.classList.toggle('on',got);if(got&&k>mx){mx=k;sel=i}});
+  HS.forEach((h,i)=>h.classList.toggle('sel',i==sel))}
  let cp=L.g.t;
  const cap=$('#cap');if(cap.textContent!==cp)cap.textContent=cp;cap.classList.toggle('off',!cc||!cp);
  $('#xp i').style.width=(STEP_NO()/STEP_ALL*100)+'%';$('#pg').textContent=(GI+1)+' / '+D.scenes[SI].segs.length;
@@ -745,9 +862,139 @@ addEventListener('resize',fit);fit();
 
 const STEP_ALL=D.scenes.reduce((a,x)=>a+x.segs.length,0);
 const STEP_NO=()=>D.scenes.slice(0,SI).reduce((a,x)=>a+x.segs.length,0)+GI+1;
-function go(si,gi,inst){SI=Math.max(0,Math.min(D.scenes.length-1,si));const n=D.scenes[SI].segs.length;GI=Math.max(0,Math.min(n-1,gi<0?n-1:gi));INST=!!inst;T0=performance.now();try{history.replaceState(null,'','#'+SI+'-'+GI)}catch(e){}}
+function go(si,gi,inst){SI=Math.max(0,Math.min(D.scenes.length-1,si));const n=D.scenes[SI].segs.length;GI=Math.max(0,Math.min(n-1,gi<0?n-1:gi));INST=!!inst;T0=performance.now();try{history.replaceState(null,'','#'+SI+'-'+GI)}catch(e){}try{updNotes()}catch(e){}}
 function next(){if(GI<D.scenes[SI].segs.length-1)go(SI,GI+1);else if(SI<D.scenes.length-1)go(SI+1,0)}
 function prev(){if(GI>0)go(SI,GI-1,true);else if(SI>0)go(SI-1,-1,true)}
+/* ---------- 講稿視窗（按 P 彈出，與投影片同步） ---------- */
+/* 講稿列點：PTS[關][步] 對應 D.scenes[關].segs[步]，改講稿時兩邊一起改 */
+const PTS=[
+[["開場：歡迎來到 Mastercraft，碩士世界","提問：如果碩士班是一款遊戲，怎樣才算「玩得好」？"],
+ ["三個常見答案：最快畢業／論文最厚／發表最多","聽起來都像成就 → 但都不一定"],
+ ["碩士班就像一個沙盒遊戲","有規則、有期限、有一棟必蓋建築：論文","往哪走、蓋什麼、留多少資源給工作與生活 → 沒有標準答案"],
+ ["今天帶大家看我的存檔","三件事：當時有什麼資源／遇到什麼問題／怎麼做選擇","希望讓你的存檔玩得更開心"]],
+[["出生點：有人旁邊就是村莊，有人在孤島＋一棵樹","同樣是第一天，心情完全不一樣"],
+ ["碩一也一樣：有研究經驗／要打工／有家庭責任","時間・金錢・精力・支持系統 → 初始能力分配都不一樣"],
+ ["我的存檔：2019.09 已在研究相關場域教課","2020.09 才進碩士班","進場前，那塊地圖已經開過"],
+ ["免責聲明：我是教育類・實踐研究（在教學現場做課程，再研究它）","別的領域、別的方法，地形不一樣","個人案例，僅作參考"],
+ ["比同學早做完 ≠ 比較有效率，可能只是偷跑一年","工具：了解自己，不要盲目比較","先定義自己的勝利條件，再談效率","否則只是比誰跑得快，卻不知道終點在哪"]],
+[["沙盒不是無限自由","硬規則：學分／研究倫理／論文／口試／修業期限","系統寫死，沒得商量"],
+ ["規則以外，怎麼配置這幾年是你的","我的路：教學現場 → 訪談 → 研討會 → 期中發表 → 畢業","這條路得要自己往前推進"],
+ ["很多焦慮＝把別人的玩法誤認成系統規定","例：一定發幾篇／一定幾年畢業／一定用某方法","先查：是規則書寫的，還是學長姐的傳說？","工具：把硬規則和別人的攻略分開"]],
+[["地圖這麼大，我到底要在哪裡蓋？"],
+ ["很多人以為研究從漂亮的題目開始，我的不是","大學修教育學程 → 進國中、高中教日語","吸引我的是一個樸素的困惑，不是哪個理論的名字","「換一種課程設計，能不能改善現場的問題？」"],
+ ["進碩班後：讀先行研究＋與人討論","在現場和文獻之間來回走 → 磨成可以研究的問題","強調：是來回走，不是一條直線"],
+ ["還沒有題目？先別慌","先找到你願意停下來多看幾眼的地方，題目就在那邊"]],
+[["剛進研究所的第一個焦慮：論文題目要寫什麼？","有點吊詭的答案：題目沒有你想像中那麼重要"],
+ ["研究主題當然重要","但封面上那一行字，通常不是一開始就能決定","比喻：沒有人先做好招牌才蓋房子"],
+ ["研究是從寬到窄","起點可以只是：對某現象好奇／想研究某群人／覺得某件事有問題／某個概念很有意思","這樣就夠你出發了"],
+ ["一開始真正重要的：把「我到底想知道什麼」講給另一個人聽，而且他聽得懂","說得到這個程度 → 可以去找老師了"],
+ ["讀文獻、跟老師談、試方法之後才會發現：","問題太大／資料拿不到／先行研究已經有人做過了","真正有趣的是旁邊那一小塊","以為要問 A，其實想知道的是 B"],
+ ["題目不是起點，是收斂之後貼上的標籤","不用先畫完整張地圖","只要知道：我現在想往哪個方向走"]],
+[["常見玩家：地圖探索 87%，建築進度 3%"],
+ ["每天忙著開地圖：再讀一篇就開始","聽起來很用功，但有時只是比較安心"],
+ ["我的經驗：題目還不清楚時，帶著目前的理解＋困惑直接去找人討論","不必等一切整理好","全部讀完才開始？那我現在還在讀"],
+ ["讀下一篇之前先問：我讀它的目標是什麼？","手上的文獻，真的不夠我啟動嗎？","能不能開始 ← 研究的清晰度＋對重要相關文獻的理解","你需要的是更多地圖，還是一個選擇？","工具：每一輪探索，都先知道自己讀的目標"]],
+[["打開文獻軟體：PDF 327 個","恭喜，你是一位優秀的觀光客"],
+ ["先行研究不是背包裡的材料，是別人蓋好的房子","存 327 篇＝參觀 327 棟，還拍了照","拍照 ≠ 你會蓋"],
+ ["參觀看三件事：","① 為什麼蓋、怎麼蓋：背景・目的・問題／對象・方法・資料 → 結論","② 我怎麼看它，寫下來：哪根柱子、哪面牆、哪個設計值得借鑑","③ 我的房子蓋在它旁邊的哪裡：接著蓋／補一塊／蓋在沒人蓋的地方","作者的說法 vs. 跟我研究的關聯 → 分開記，留頁碼"],
+ ["那材料是什麼？親手蒐集的資料＋自己的考察","別人的房子再漂亮，也不能拆來當你的牆"],
+ ["寫作時要說得出：「我知道它為什麼現在出現在這裡」","只有「我記得這篇很重要」不夠","工具：先行研究是鄰居，不是你的建材","看懂別人蓋到哪裡，才知道自己從哪裡接著蓋"]],
+[["找到位置後的下一個問題：我要蓋的東西到底需要什麼？","材料並非越多越好"],
+ ["原本的關心：換一種課程設計，能不能改善現場的問題","「改善」太大：感受？經驗？行為？表現？變化？","問題不一樣，材料就不一樣"],
+ ["想知道學生怎麼看這門課 → 滿意度・訪談","想說能力有沒有變化 → 與能力目標對應的表現資料"],
+ ["不能因為背包只有玻璃，就整棟用玻璃蓋","「學生說很好」不能證明能力一定提升"],
+ ["請大家填空：我想知道＿＿，所以至少需要看到＿＿","工具：蒐集的資料要呼應研究目的，否則蓋不出符合藍圖的建築"]],
+[["教科書版是直線：選題 → 文獻 → 方法 → 蒐集 → 分析 → 寫完","看起來很像生產線","但在成為熟練的研究者之前，我們沒辦法總是一步到位"],
+ ["實際是一個圈：想蓋什麼 → 找材料 → 蓋一部分 → 站遠一點看 → 修改 → 再蓋","然後再來一圈"],
+ ["我的時間線：2021.06 訪談 → 2023.05–06 口試・修改・畢業","中間隔了兩年","那兩年：整理・分析・解釋・發表・修改・繼續寫"],
+ ["資料蒐集完 ≠ 論文做完","只是材料運到工地，工人還沒上班"],
+ ["不要問「論文完成百分之幾」，只會讓你難過","改問：我現在卡的是哪一種？","方向／文獻／資料／分析／論證／寫作／缺回饋"]],
+[["第二個魔王級焦慮：找哪位老師當指導教授？","真的很重要：影響你讀什麼、怎麼想問題、怎麼設計研究"],
+ ["先把恐懼調低一格：不管跟誰，最後把論文寫完的人是你","老師不是代打，也不替你決定人生方向"],
+ ["不建議用「最厲害」「畢業最快」來選","更好的問題：我想寫的東西，跟哪位老師比較聊得起來？"],
+ ["看簡介看不出來，要真的去聊，有時要聊很多次","老師第一次沒說好很正常：他也在確認幫不幫得上忙","重點是確認：能不能一起把這件事做完"],
+ ["指導教授像一位知道哪裡會塌的老玩家","「這裡不要挖／這個材料撐不住／這個設計做到最後很麻煩」","這些建議都很真實，請認真聽"],
+ ["但若研究被調成你沒興趣、心裡過不去的東西，那幾年會很辛苦","老師的專業重要，你對研究的所有權也重要","想蓋什麼，最後還是你決定"]],
+[["老師、同學、研討會不是來幫你蓋房子的","他們來參觀，指著某根柱子問：這根為什麼放這裡？"],
+ ["那一刻才發現：我也不知道"],
+ ["我的兩個外部檢查點：2021.12 研討會發表、2022.03 期中發表","期中發表依學系規定進行","兩個都在口試之前","最大的意義：逼我把研究說給別人聽，提早發現問題"],
+ ["Bug 越早抓到越便宜","地基的問題到三樓才發現 → 不叫修改，叫拆遷"]],
+[["講到資源會先想到：資料庫・圖書館・經費・軟體","最珍貴的其實是坐在你旁邊的同學","限時資源：三年級沒修課以後，常常就碰不到"],
+ ["研究的東西不一樣，聊天還是有用","講給外行人聽，就得回答：我在研究什麼？為什麼重要？這篇文獻在講什麼？","同學聽得懂＝你自己也開始懂了"],
+ ["我辦過讀書會；不一定要組（看時間與精力）","至少不要把研究玩成單機遊戲","一起吃飯・聊天・抱怨研究都算","研究是很長的心理歷程，有人一起走差很多"],
+ ["地圖會更新：留意新工具、新研究","有機會多去研討會走走","不發表也可以去看別人怎麼蓋，會得到靈感"]],
+[["現在做研究多少會碰到 AI","能用的地方：找資料・整理概念・協助閱讀・修語言・寫程式・分析資料","不用假裝它不存在"],
+ ["活用它，但這些仍然是你負責：","個人資料／研究資料／引用／著作權／研究倫理／AI 生成內容的揭露"],
+ ["規定會一直變","與其背「可以／不可以」對照表，不如養成習慣","動手之前，先查學校與領域的規範"],
+ ["AI 可以是一把很好的鑽石鎬","但掛在論文上的是你的名字，不是 AI 的"]],
+[["前面都在講論文那棟房子怎麼蓋","鏡頭拉遠：你的地圖上不會只有這一棟"],
+ ["工作・金錢・健康・朋友・興趣・未來，都在同一張地圖上","它們不是敵人，也不是負面狀態","打工花時間，但產出金錢與經驗","跟朋友吃飯花時間，但在幫你回血"],
+ ["如果不是論文的事都叫干擾，那睡覺也是干擾","照這樣算，最理想的研究生是一台伺服器"],
+ ["我的歷程 2019–2023，但不是每天都在做研究","我也要打工、要生活，還要玩","找到壓力的出口＝很正經的基地建設"],
+ ["先不要排論文，先列每週固定成本","睡覺・上課・工作・通勤・家裡的事・吃飯","扣掉以後剩下的，才是研究真正能用的","工具：研究計畫照著人生排，別把人生塞進論文剩下的縫"]],
+[["玩家狀態：每週可做研究 15 小時","藍圖 A 每週需要 12h → 可以","藍圖 B 每週需要 47h → 嗯……"],
+ ["最常用的解法：我再努力一點","每週要工作 20h 的人，答案不該永遠是少睡 20h"],
+ ["三個按鈕：縮小範圍／延長時間／增加資源或找人幫忙","基於你的人生條件，做最合理的研究設計"],
+ ["我學到的：拿到資料到寫完之間，還有分析・寫作・回饋・修改","估工期不能只算蒐集資料要多久","重新規劃的話，我會把後半段成本老實算進去"],
+ ["縮小規模不是失敗","住得進去的小木屋 ＞ 腦中永遠不會完工的城堡"]],
+[["幾乎一定會出現的比較：","兩年一定要畢業嗎？","同學都開始收資料了，我是不是太慢？","別人都投稿了，我怎麼還在看文獻？"],
+ ["每個人條件差太多：全心寫論文／要工作／有家庭／想實習／想做很多別的事","兩年畢業不等於成功，五六年也不等於失敗"],
+ ["更重要：你知不知道自己的資源花到哪裡去了","真正有限的不只是錢：還有時間・注意力・體力・情緒"],
+ ["不要問：別人現在蓋到幾樓？","改問：以我現在手上的資源，下一步要蓋什麼？","可以快、可以慢，但要知道自己為什麼這樣走"]],
+[["把整條時間線攤開來看"],
+ ["2019.09 教學現場：開始注意到問題","2020.09 進碩班：把現場的關心轉成研究","2021.06 訪談：拿到能回答問題的材料","2021.12 研討會：把蓋到一半的房子拿給別人看","2022.03 期中發表：再檢查一次結構","2023.05–06 口試・修改・畢業"],
+ ["這是我的存檔","回頭看：每個階段都給自己一個明確的當下目標"],
+ ["你不用照我的年份走","但請給自己一個明確的當下目標","在碩士班，沒有人會逼你，也不會自動就畢業"]],
+[["回到一開始的問題：沙盒遊戲，怎樣才叫玩得好？"],
+ ["答案不在最快打完，也不在能力值點滿","知道自己想做什麼、手上有什麼","蓋出一個你認得出來的東西","能很有自信地說：這是我的存檔"],
+ ["我的存檔留下：一篇完成的研究／教學現場的經驗／研究與發表的歷程／對自己研究方式的理解","那是我的結果，不是你的勝利條件"],
+ ["論文真的會出版、進學校系統，搜尋你的名字就會看到","不用改變世界，但請好好把它收尾","幾年後重新打開能說：那時候的我，真的很認真把這件事做完了"],
+ ["論文是很重要的一棟建築，但不是整張地圖","兩年跑完主線／蓋一座漂亮的城／繞很多路 → 都可以"],
+ ["最值得珍惜的資源：現在坐在你旁邊的這些人","論文總有一天會寫完","一起討論、困惑、抱怨的這段時間，不一定還會再有"],
+ ["地圖很大，資源有限","這個存檔，你想留下什麼？"],
+ ["謝謝大家"]],
+[["玩家檢查表，歡迎拍照帶走","用途：把「我現在很卡」拆成可以動手的下一步"]]
+];
+let NW=null,NKEY='',NT0=0,NFS=30,NIV=0;
+const scName=s=>s.dataset.no+'　'+(s.dataset.zh||s.dataset.en);
+function updNotes(){if(!NW||NW.closed)return;const k=SI+'-'+GI;if(k===NKEY)return;NKEY=k;const d=NW.document,q=i=>d.getElementById(i),s=scs[SI],segs=D.scenes[SI].segs;
+ q('sc').textContent=scName(s);q('st').textContent='本關 '+(GI+1)+' / '+segs.length+'　｜　全場 '+STEP_NO()+' / '+STEP_ALL;
+ const now=q('now'),P=(PTS[SI]||[])[GI];now.textContent='';
+ if(P){const ul=d.createElement('ul');P.forEach(x=>{const li=d.createElement('li');li.textContent=x;ul.append(li)});now.append(ul)}else now.textContent=segs[GI].t;
+ q('full').textContent=segs[GI].t;q('tool').textContent=GI==segs.length-1&&s.dataset.tool?'◆ 這一步會跳出成就提示：'+s.dataset.tool:'';
+ const brief=(a,b)=>(PTS[a]||[])[b]?PTS[a][b].join('　／　'):D.scenes[a].segs[b].t;
+ let nx='（最後一步）';if(GI<segs.length-1)nx=brief(SI,GI+1);else if(SI<scs.length-1)nx='【下一關 '+scName(scs[SI+1])+'】'+brief(SI+1,0);
+ q('nx').textContent=nx;d.documentElement.scrollTop=0}
+function openNotes(){if(NW&&!NW.closed){NW.focus();return}
+ NW=window.open('','mc_notes','width=780,height=600');
+ if(!NW){alert('瀏覽器擋下了彈出視窗：請允許這個頁面開啟彈出視窗，再按一次 P。');return}
+ const d=NW.document;d.open();d.write(`<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>MASTERCRAFT 講稿</title><style>
+*{box-sizing:border-box}html,body{margin:0;background:#16161a;color:#eee;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+header{position:sticky;top:0;display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:#000;padding:10px 18px;border-bottom:3px solid #ffec4f}
+#sc{font-size:20px;color:#ffec4f;flex:1;min-width:240px}#st{font-size:14px;color:#bbb}
+#tm{font:700 26px Consolas,monospace;color:#6dff6d;cursor:pointer}#ck{font:16px Consolas,monospace;color:#bbb}
+main{padding:20px 24px 90px}#now{font-weight:700;line-height:1.45}#now ul{margin:0;padding-left:1.15em}#now li{margin:.4em 0}#now li::marker{color:#ffec4f}
+details{margin-top:22px;color:#888;font-size:15px;line-height:1.7}summary{cursor:pointer;font-size:13px;letter-spacing:2px}
+#tool{margin-top:14px;color:#6fe9ff;font-size:17px}h6{margin:26px 0 6px;font-size:13px;letter-spacing:2px;color:#888;border-top:1px solid #333;padding-top:14px}
+#nx{font-size:19px;line-height:1.6;color:#999}
+footer{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;align-items:center;background:#000;padding:8px 14px;font-size:13px;color:#888}
+button{background:#2b2b31;color:#eee;border:1px solid #555;border-radius:4px;padding:8px 14px;font:inherit;font-size:15px;cursor:pointer;white-space:nowrap}
+</style></head><body><header><b id="sc"></b><span id="st"></span><span id="tm" title="點一下歸零">00:00</span><span id="ck"></span></header>
+<main><div id="now"></div><div id="tool"></div><h6>NEXT ▸ 下一步</h6><div id="nx"></div><details><summary>逐字稿（點開對照）</summary><div id="full"></div></details></main>
+<footer><button id="bp">◀ 上一步</button><button id="bn">下一步 ▶</button><button id="bs">A−</button><button id="bl">A＋</button><span>←→ 空白鍵在這個視窗也能操作　｜　點計時器歸零</span></footer></body></html>`);d.close();
+ const q=i=>d.getElementById(i),fs=()=>q('now').style.fontSize=NFS+'px';fs();
+ q('bp').onclick=()=>prev();q('bn').onclick=()=>next();q('bs').onclick=()=>{NFS=Math.max(16,NFS-2);fs()};q('bl').onclick=()=>{NFS=Math.min(60,NFS+2);fs()};
+ d.addEventListener('keydown',e=>{const k=e.key;
+  if(k=='ArrowRight'||k==' '||k=='PageDown'||k=='Enter'){e.preventDefault();next()}
+  else if(k=='ArrowLeft'||k=='PageUp'||k=='Backspace'){e.preventDefault();prev()}
+  else if(k=='ArrowDown'){e.preventDefault();go(SI+1,0)}
+  else if(k=='ArrowUp'){e.preventDefault();go(GI>0?SI:SI-1,0,true)}
+  else if(k=='Home')go(0,0,true);else if(k=='End')go(D.scenes.length-1,0,true)});
+ NT0=Date.now();q('tm').onclick=()=>{NT0=Date.now()};const p2=n=>String(n).padStart(2,'0');
+ clearInterval(NIV);NIV=setInterval(()=>{if(!NW||NW.closed){clearInterval(NIV);return}const e=Math.floor((Date.now()-NT0)/1000),n=new Date();
+  q('tm').textContent=p2(Math.floor(e/60))+':'+p2(e%60);q('ck').textContent=p2(n.getHours())+':'+p2(n.getMinutes())},500);
+ NKEY='';updNotes()}
+addEventListener('beforeunload',()=>{try{NW&&NW.close()}catch(e){}});
 addEventListener('keydown',e=>{const k=e.key;if($('#help').style.display!='none'){$('#help').style.display='none';e.preventDefault();return}
  if(k=='ArrowRight'||k==' '||k=='PageDown'||k=='Enter'){e.preventDefault();next()}
  else if(k=='ArrowLeft'||k=='PageUp'||k=='Backspace'){e.preventDefault();prev()}
@@ -755,6 +1002,7 @@ addEventListener('keydown',e=>{const k=e.key;if($('#help').style.display!='none'
  else if(k=='ArrowUp'){e.preventDefault();go(GI>0?SI:SI-1,0,true)}
  else if(k=='Home')go(0,0,true);else if(k=='End')go(D.scenes.length-1,0,true)
  else if(k=='n'||k=='N'||k=='s'||k=='S'){cc=!cc}
+ else if(k=='p'||k=='P'){openNotes()}
  else if(k=='f'||k=='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
  else if(k=='h'||k=='H'||k=='?'){const x=$('#help');x.style.display=x.style.display=='none'?'flex':'none'}
 });
